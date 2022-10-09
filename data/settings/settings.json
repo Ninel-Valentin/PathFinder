@@ -1,0 +1,25 @@
+{
+    "dialogueSettings": {
+        "width": 300,
+        "height": 500,
+        "isFullscreen": false,
+        "windowTitle": "Pathfinder - Entry",
+        "defaultCloseOpperation": "EXIT_ON_CLOSE",
+        "menuSettings": {
+            "minimize": "ENABLED",
+            "restore": "DISABLED",
+            "exit": "ENABLED"
+        }
+    },
+    "mainWindow": {
+        "isFullscreen": true,
+        "windowTitle": "Pathfinder - Application",
+        "defaultCloseOpperation": "EXIT_ON_CLOSE",
+        "menuSettings": {
+            "custom": {},
+            "minimize": "ENABLED",
+            "restore": "DISABLED",
+            "exit": "ENABLED"
+        }
+    }
+}
