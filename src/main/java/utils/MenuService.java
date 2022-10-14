@@ -1,12 +1,9 @@
 package utils;
 
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 
@@ -14,39 +11,32 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class MenuService {
-    public static void LoadMenubar(String windowName, JFrame window) {
+    public static void LoadMenubar(MenuSettings menuSettings, String windowName, JFrame window) {
         JMenuBar menuBar;
-        JMenu menu, subMenu;
-        JMenuItem menuItem;
 
         // Instantiate the menu bar
         menuBar = new JMenuBar();
-        UIManager.put("MenuBar.background", new Color(45, 45, 45));
-        Dimension windowSize = new Dimension(window.getSize().width, 25);
+        UIManager.put("MenuBar.background", CONSTS.menuColor);
+        Dimension windowSize = new Dimension(window.getSize().width, CONSTS.menuButtonSize);
         menuBar.setPreferredSize(windowSize);
         menuBar.setSize(windowSize);
         menuBar.setBorder(null);
+        menuBar.setBorderPainted(false);
 
         // Set layout for the custom buttons in the right
         SpringLayout layout = new SpringLayout();
         menuBar.setLayout(layout);
 
-        // 75,75,75 bg
-
-        // Build the first menu
-        // menu = new JMenu("A menu");
+        /* TODO: ADD ICONS FOR DISABLED AND READ FROM CUSTOM SETTINGS ENABLED DISABLED STATUS */
 
         // Add the common buttons on the MenuBar => exit|restore|minimize
-        Dimension buttonSize = new Dimension(25, 25);
-
-        JButton exitButton = CreateMenuButton(buttonSize, "Exit");
+        JButton exitButton = CreateMenuButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -54,7 +44,7 @@ public class MenuService {
         });
         menuBar.add(exitButton);
 
-        JButton restoreButton = CreateMenuButton(buttonSize, "RestoreUp");
+        JButton restoreButton = CreateMenuButton("RestoreUp");
         restoreButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Restored");
@@ -62,7 +52,7 @@ public class MenuService {
         });
         menuBar.add(restoreButton);
 
-        JButton minimizeButton = CreateMenuButton(buttonSize, "Minimize");
+        JButton minimizeButton = CreateMenuButton("Minimize");
         minimizeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("minimized");
@@ -71,28 +61,39 @@ public class MenuService {
         menuBar.add(minimizeButton);
 
         // After adding the buttons, we need to set constraints for the layout
-        int buttonPadding = 10;
-        layout.putConstraint(SpringLayout.WEST, exitButton, -buttonSize.width, SpringLayout.EAST, menuBar);
-        layout.putConstraint(SpringLayout.EAST, restoreButton, -buttonPadding, SpringLayout.WEST, exitButton);
-        layout.putConstraint(SpringLayout.EAST, minimizeButton, -buttonPadding, SpringLayout.WEST, restoreButton);
+        layout.putConstraint(SpringLayout.WEST, exitButton, -CONSTS.menuButtonSize, SpringLayout.EAST, menuBar);
+        layout.putConstraint(SpringLayout.EAST, restoreButton, 0, SpringLayout.WEST, exitButton);
+        layout.putConstraint(SpringLayout.EAST, minimizeButton, 0, SpringLayout.WEST, restoreButton);
 
         // menuBar.add(menu);
         window.setJMenuBar(menuBar);
     }
 
-    private static JButton CreateMenuButton(Dimension buttonSize, String iconName) {
-        ImageIcon minimizeIcon = new ImageIcon("./data/img/menuBarButtons/" + iconName + ".png");
-        Image scaledMinimizeIcon = minimizeIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-        JButton minimizeButton = new JButton(new ImageIcon(scaledMinimizeIcon));
+    private static JButton CreateMenuButton(String iconName) {
+        ImageIcon icon = new ImageIcon("./data/img/menuBarButtons/" + iconName + ".png");
+        Image scaledIcon = icon.getImage()
+                .getScaledInstance(CONSTS.menuButtonSize, CONSTS.menuButtonSize, Image.SCALE_SMOOTH);
+        JButton button = new JButton(new ImageIcon(scaledIcon));
+        button.setBackground(CONSTS.menuColor);
         // Make the background transparent for the button
-        minimizeButton.setOpaque(false);
-        minimizeButton.setContentAreaFilled(false);
-        minimizeButton.setBorderPainted(false);
-        minimizeButton.setBorder(null);
-        // Resize button
-        minimizeButton.setSize(buttonSize);
+        button.setBorderPainted(false);
+        button.setBorder(null);
 
-        return minimizeButton;
+        // Resize button
+        button.setSize(CONSTS.menuButtonSize, CONSTS.menuButtonSize);
+
+        // Add hover effect on the buttons
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                ((JButton) evt.getSource()).setBackground(CONSTS.menuButtonHoverColor);
+            }
+
+            public void mouseExited(MouseEvent evt) {
+                ((JButton) evt.getSource()).setBackground(CONSTS.menuColor);
+            }
+        });
+
+        return button;
     }
 }
 

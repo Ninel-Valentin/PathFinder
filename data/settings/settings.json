@@ -9,6 +9,9 @@
             "minimize": "ENABLED",
             "restore": "DISABLED",
             "exit": "ENABLED"
+        },
+        "contentSettings":{
+            "layout":"card"
         }
     },
     "mainWindow": {

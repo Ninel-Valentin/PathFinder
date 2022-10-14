@@ -23,7 +23,7 @@ public class WindowService {
             case "EXIT_ON_CLOSE":
                 break;
             default:
-                System.out.println(closingOperation + " is not a specified value");
+                System.out.println(closingOperation + " is not a specified value in CreateWindow");
         }
         // What happens when the window closes?
         window.setDefaultCloseOperation(closingOperationValue);
@@ -44,10 +44,10 @@ public class WindowService {
         }
 
         // Add the menubar to the window
-        MenuService.LoadMenubar(windowName,window);
+        MenuService.LoadMenubar(settings.menuSettings, windowName, window);
 
         // Add the content to the window
-        ContentService.LoadContent(windowName,window);
+        ContentService.LoadContent(windowName, window);
 
         window.setVisible(true);
     }
