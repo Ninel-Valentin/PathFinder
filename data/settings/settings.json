@@ -9,9 +9,6 @@
             "minimize": "ENABLED",
             "restore": "DISABLED",
             "exit": "ENABLED"
-        },
-        "contentSettings":{
-            "layout":"card"
         }
     },
     "mainWindow": {
@@ -21,7 +18,7 @@
         "menuSettings": {
             "custom": {},
             "minimize": "ENABLED",
-            "restore": "DISABLED",
+            "restore": "ENABLED",
             "exit": "ENABLED"
         }
     }

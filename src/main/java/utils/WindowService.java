@@ -1,6 +1,8 @@
 package utils;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -10,6 +12,10 @@ public class WindowService {
         CreateWindow("dialogueSettings");
     }
 
+    public static void OpenDefaultWindow(Object dataType, Object secondaryDataset, Object Algorithm) {
+        CreateWindow("mainWindow");
+    }
+
     public static void CreateWindow(String windowName) {
         Settings settings = SettingsService.GetSettings(windowName);
         JFrame window = new JFrame(settings.windowTitle);
@@ -17,9 +23,6 @@ public class WindowService {
         String closingOperation = settings.closingOperation;
         int closingOperationValue = JFrame.EXIT_ON_CLOSE;
         switch (closingOperation) {
-            case "DISPOSE_ON_CLOSE":
-                closingOperationValue = JFrame.DISPOSE_ON_CLOSE;
-                break;
             case "EXIT_ON_CLOSE":
                 break;
             default:
@@ -47,8 +50,12 @@ public class WindowService {
         MenuService.LoadMenubar(settings.menuSettings, windowName, window);
 
         // Add the content to the window
-        ContentService.LoadContent(windowName, window);
-
+        JPanel windowContent = ContentService.LoadContent(windowName, window);
+        if (windowContent == null) {
+            System.out.println("Window content creation returned null!");
+            System.exit(0);
+        }
+        window.add(windowContent);
         window.setVisible(true);
     }
 }

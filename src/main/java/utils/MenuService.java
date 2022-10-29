@@ -8,6 +8,7 @@ import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 
 import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,8 +23,8 @@ public class MenuService {
 
         // Instantiate the menu bar
         menuBar = new JMenuBar();
-        UIManager.put("MenuBar.background", CONSTS.menuColor);
-        Dimension windowSize = new Dimension(window.getSize().width, CONSTS.menuButtonSize);
+        UIManager.put("MenuBar.background", Consts.MENU_COLOR);
+        Dimension windowSize = new Dimension(window.getSize().width, Consts.MENU_BTN_SIZE);
         menuBar.setPreferredSize(windowSize);
         menuBar.setSize(windowSize);
         menuBar.setBorder(null);
@@ -33,7 +34,10 @@ public class MenuService {
         SpringLayout layout = new SpringLayout();
         menuBar.setLayout(layout);
 
-        /* TODO: ADD ICONS FOR DISABLED AND READ FROM CUSTOM SETTINGS ENABLED DISABLED STATUS */
+        /*
+         * TODO: ADD ICONS FOR DISABLED AND READ FROM CUSTOM SETTINGS ENABLED DISABLED
+         * STATUS
+         */
 
         // Add the common buttons on the MenuBar => exit|restore|minimize
         JButton exitButton = CreateMenuButton("Exit");
@@ -61,7 +65,7 @@ public class MenuService {
         menuBar.add(minimizeButton);
 
         // After adding the buttons, we need to set constraints for the layout
-        layout.putConstraint(SpringLayout.WEST, exitButton, -CONSTS.menuButtonSize, SpringLayout.EAST, menuBar);
+        layout.putConstraint(SpringLayout.WEST, exitButton, -Consts.MENU_BTN_SIZE, SpringLayout.EAST, menuBar);
         layout.putConstraint(SpringLayout.EAST, restoreButton, 0, SpringLayout.WEST, exitButton);
         layout.putConstraint(SpringLayout.EAST, minimizeButton, 0, SpringLayout.WEST, restoreButton);
 
@@ -72,26 +76,26 @@ public class MenuService {
     private static JButton CreateMenuButton(String iconName) {
         ImageIcon icon = new ImageIcon("./data/img/menuBarButtons/" + iconName + ".png");
         Image scaledIcon = icon.getImage()
-                .getScaledInstance(CONSTS.menuButtonSize, CONSTS.menuButtonSize, Image.SCALE_SMOOTH);
+                .getScaledInstance(Consts.MENU_BTN_SIZE, Consts.MENU_BTN_SIZE, Image.SCALE_SMOOTH);
         JButton button = new JButton(new ImageIcon(scaledIcon));
-        button.setBackground(CONSTS.menuColor);
+        button.setBackground(Consts.MENU_COLOR);
         // Make the background transparent for the button
         button.setBorderPainted(false);
         button.setBorder(null);
-
         // Resize button
-        button.setSize(CONSTS.menuButtonSize, CONSTS.menuButtonSize);
+        button.setSize(Consts.MENU_BTN_SIZE, Consts.MENU_BTN_SIZE);
 
         // Add hover effect on the buttons
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
-                ((JButton) evt.getSource()).setBackground(CONSTS.menuButtonHoverColor);
+                ((JButton) evt.getSource()).setBackground(Consts.MENU_BTN_COLOR_HOVER);
             }
 
             public void mouseExited(MouseEvent evt) {
-                ((JButton) evt.getSource()).setBackground(CONSTS.menuColor);
+                ((JButton) evt.getSource()).setBackground(Consts.MENU_COLOR);
             }
         });
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         return button;
     }
