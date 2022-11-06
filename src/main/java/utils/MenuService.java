@@ -18,7 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class MenuService {
-    public static void LoadMenubar(MenuSettings menuSettings, String windowName, JFrame window) {
+    public static void LoadMenubar( String windowName, JFrame window) {
         JMenuBar menuBar;
 
         // Instantiate the menu bar

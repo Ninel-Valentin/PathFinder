@@ -3,7 +3,6 @@ package utils;
 import javax.swing.JPanel;
 
 import utils.Algorythms.Graphs.Graph;
-import utils.Algorythms.Graphs.Graph.Node;
 
 import java.awt.event.MouseEvent;
 import java.awt.Color;
