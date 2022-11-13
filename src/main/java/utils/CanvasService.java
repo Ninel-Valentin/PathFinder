@@ -3,7 +3,6 @@ package utils;
 import javax.swing.JPanel;
 
 import utils.Algorythms.Graphs.Graph;
-import utils.Algorythms.Graphs.Graph.Node;
 
 import java.awt.event.MouseEvent;
 import java.awt.Color;
@@ -17,12 +16,12 @@ public class CanvasService {
     Graph graph;
     JPanel canvas;
 
-    public CanvasService(JPanel canvas, String graphType) {
+    public CanvasService(JPanel canvas) {
         this.canvas = canvas;
         this.graph = new Graph();
     }
 
-    public void HandleCanvasClick(MouseEvent e) {
+    public void HandleUnorientedGraphClick(MouseEvent e) {
         Graphics g = canvas.getGraphics();
         Graphics2D graphics = (Graphics2D) g;
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
