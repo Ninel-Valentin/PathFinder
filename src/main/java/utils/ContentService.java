@@ -27,8 +27,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.text.MaskFormatter;
 
-import utils.Algorythms.Graphs.Graph;
-import utils.Algorythms.Grids.Grid;
+import utils.DataStorageServices.SessionStorageService;
+import utils.DataStorageServices.LocalDataService.SaveEntry;
 
 import javax.swing.ImageIcon;
 
@@ -129,50 +129,52 @@ public class ContentService {
                                                 cardPanel);
                                 // #endregion
 
-                                // #region Title - Algorithm
-
-                                JLabel algorithmTitle = new JLabel("Algorithm type", JLabel.LEFT);
-                                algorithmTitle.setForeground(Color.WHITE);
-                                cardPanel.add(algorithmTitle);
-
-                                cardLayout.putConstraint(SpringLayout.NORTH,
-                                                algorithmTitle,
-                                                0,
-                                                SpringLayout.NORTH,
-                                                cardPanel);
-                                cardLayout.putConstraint(SpringLayout.EAST,
-                                                algorithmTitle,
-                                                -Consts.DIALOGUE_PADDING_H,
-                                                SpringLayout.EAST,
-                                                cardPanel);
-                                cardLayout.putConstraint(SpringLayout.WEST,
-                                                algorithmTitle,
-                                                Consts.DIALOGUE_PADDING_H,
-                                                SpringLayout.WEST,
-                                                cardPanel);
-                                // #endregion
-
-                                // #region DropDown - Algorithm Type
-                                String algorithmCbItems[] = Consts.ALGORTIHMS_GRAPH;
-                                final JComboBox<String> algorithmCb = new JComboBox<>(algorithmCbItems);
-                                algorithmCb.setEditable(false);
-                                cardPanel.add(algorithmCb);
-
-                                cardLayout.putConstraint(SpringLayout.NORTH,
-                                                algorithmCb,
-                                                Consts.DIALOGUE_PADDING_V,
-                                                SpringLayout.SOUTH, algorithmTitle);
-                                cardLayout.putConstraint(SpringLayout.EAST,
-                                                algorithmCb,
-                                                0,
-                                                SpringLayout.EAST,
-                                                algorithmTitle);
-                                cardLayout.putConstraint(SpringLayout.WEST,
-                                                algorithmCb,
-                                                0,
-                                                SpringLayout.WEST,
-                                                algorithmTitle);
-                                // #endregion
+                                /*
+                                 * // #region Title - Algorithm
+                                 * 
+                                 * JLabel algorithmTitle = new JLabel("Algorithm type", JLabel.LEFT);
+                                 * algorithmTitle.setForeground(Color.WHITE);
+                                 * cardPanel.add(algorithmTitle);
+                                 * 
+                                 * cardLayout.putConstraint(SpringLayout.NORTH,
+                                 * algorithmTitle,
+                                 * 0,
+                                 * SpringLayout.NORTH,
+                                 * cardPanel);
+                                 * cardLayout.putConstraint(SpringLayout.EAST,
+                                 * algorithmTitle,
+                                 * -Consts.DIALOGUE_PADDING_H,
+                                 * SpringLayout.EAST,
+                                 * cardPanel);
+                                 * cardLayout.putConstraint(SpringLayout.WEST,
+                                 * algorithmTitle,
+                                 * Consts.DIALOGUE_PADDING_H,
+                                 * SpringLayout.WEST,
+                                 * cardPanel);
+                                 * // #endregion
+                                 * 
+                                 * // #region DropDown - Algorithm Type
+                                 * String algorithmCbItems[] = Consts.ALGORTIHMS_GRAPH;
+                                 * final JComboBox<String> algorithmCb = new JComboBox<>(algorithmCbItems);
+                                 * algorithmCb.setEditable(false);
+                                 * cardPanel.add(algorithmCb);
+                                 * 
+                                 * cardLayout.putConstraint(SpringLayout.NORTH,
+                                 * algorithmCb,
+                                 * Consts.DIALOGUE_PADDING_V,
+                                 * SpringLayout.SOUTH, algorithmTitle);
+                                 * cardLayout.putConstraint(SpringLayout.EAST,
+                                 * algorithmCb,
+                                 * 0,
+                                 * SpringLayout.EAST,
+                                 * algorithmTitle);
+                                 * cardLayout.putConstraint(SpringLayout.WEST,
+                                 * algorithmCb,
+                                 * 0,
+                                 * SpringLayout.WEST,
+                                 * algorithmTitle);
+                                 * // #endregion
+                                 */
 
                                 // #region Title - Grid Size & Graph type
 
@@ -183,8 +185,8 @@ public class ContentService {
                                 cardLayout.putConstraint(SpringLayout.NORTH,
                                                 graphGridTitle,
                                                 Consts.DIALOGUE_PADDING_V,
-                                                SpringLayout.SOUTH,
-                                                algorithmCb);
+                                                SpringLayout.NORTH,
+                                                cardPanel);
                                 cardLayout.putConstraint(SpringLayout.EAST,
                                                 graphGridTitle,
                                                 -Consts.DIALOGUE_PADDING_H,
@@ -344,19 +346,8 @@ public class ContentService {
                                 JButton newButton = new JButton("NEW");
                                 contentPanel.add(newButton);
                                 newButton.addActionListener(new ActionListener() {
-
                                         public void actionPerformed(ActionEvent e) {
-                                                // INFO: Save logic
-
-                                                // String path = System.getProperty("user.home") + "\\Desktop";
-                                                // JFileChooser chooser = new JFileChooser(path);
-                                                // chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                                                // int returned = chooser.showOpenDialog(window);
-                                                // if (returned == JFileChooser.APPROVE_OPTION) {
-                                                // String location = chooser.getCurrentDirectory().getAbsolutePath();
-                                                // }
                                                 String dataInfo = null;
-                                                Object secondaryDataset = null;
                                                 switch (canvasCb.getSelectedItem().toString()) {
                                                         case "Graph Canvas":
                                                                 for (Component obj : cardPanel.getComponents()) {
@@ -386,32 +377,69 @@ public class ContentService {
                                                                 for (Component obj : cardPanel.getComponents()) {
                                                                         if (obj.getName() != null) {
                                                                                 if (obj.getName() == "rowInput_REMOVABLE") {
-                                                                                        size.setSize(Integer
+                                                                                        Object rows = ((JFormattedTextField) (obj))
+                                                                                                        .getValue();
+                                                                                        // Initialize with negative
+                                                                                        // value to check at the end;
+                                                                                        int height = -1;
+                                                                                        if (rows == null || Integer
                                                                                                         .valueOf(((JFormattedTextField) (obj))
                                                                                                                         .getValue()
-                                                                                                                        .toString()),
-                                                                                                        size.height);
+                                                                                                                        .toString()) < 2) {
+                                                                                                ((JFormattedTextField) (obj))
+                                                                                                                .setBackground(Consts.DIALOGUE_GRIDSIZE_WRONG_COLOR);
+                                                                                        } else {
+                                                                                                ((JFormattedTextField) (obj))
+                                                                                                                .setBackground(Color.WHITE);
+                                                                                                height = Integer.valueOf(
+                                                                                                                ((JFormattedTextField) (obj))
+                                                                                                                                .getValue()
+                                                                                                                                .toString());
+
+                                                                                        }
+                                                                                        size.setSize(size.width,
+                                                                                                        height);
                                                                                 }
                                                                                 if (obj.getName() == "colInput_REMOVABLE") {
-
-                                                                                        size.setSize(size.width, Integer
+                                                                                        Object cols = ((JFormattedTextField) (obj))
+                                                                                                        .getValue();
+                                                                                        // Initialize with negative
+                                                                                        // value to check at the end;
+                                                                                        int width = -1;
+                                                                                        if (cols == null || Integer
                                                                                                         .valueOf(((JFormattedTextField) (obj))
                                                                                                                         .getValue()
-                                                                                                                        .toString()));
+                                                                                                                        .toString()) < 2) {
+                                                                                                ((JFormattedTextField) (obj))
+                                                                                                                .setBackground(Consts.DIALOGUE_GRIDSIZE_WRONG_COLOR);
+                                                                                        } else {
+                                                                                                ((JFormattedTextField) (obj))
+                                                                                                                .setBackground(Color.WHITE);
+                                                                                                width = Integer.valueOf(
+                                                                                                                ((JFormattedTextField) (obj))
+                                                                                                                                .getValue()
+                                                                                                                                .toString());
+                                                                                        }
+                                                                                        size.setSize(width,
+                                                                                                        size.height);
                                                                                 }
-                                                                                break;
                                                                         }
                                                                 }
-                                                                dataInfo = "GRID:" + size.width + ":" + size.height;
+                                                                dataInfo = size.width < 2 || size.height < 2
+                                                                                ? "ERROR"
+                                                                                : "GRID:" + size.width + ":"
+                                                                                                + size.height;
                                                                 break;
                                                         default:
                                                                 System.err.println(
                                                                                 "ERROR: \"" + canvasCb.getSelectedItem()
                                                                                                 + "\" is not a valid setting!");
                                                 }
-                                                // push info to %appData%
-                                                WindowService.OpenDefaultWindow();
-                                                window.dispose();
+                                                if (dataInfo != "ERROR") {
+                                                        SessionStorageService.WriteSessionStorage(dataInfo);
+                                                        WindowService.OpenMainWindow();
+                                                        window.dispose();
+                                                }
                                         }
                                 });
 
@@ -487,10 +515,6 @@ public class ContentService {
                                                                                         graphGridTitle);
                                                                         // #endregion
 
-                                                                        algorithmCb.removeAllItems();
-                                                                        for (String algorithmEntry : Consts.ALGORTIHMS_GRAPH) {
-                                                                                algorithmCb.addItem(algorithmEntry);
-                                                                        }
                                                                         break;
                                                                 case "Grid Canvas":
                                                                         for (Component obj : cardPanel
@@ -506,7 +530,7 @@ public class ContentService {
                                                                         // TODO: add check for inputs to have values
                                                                         // over 2
                                                                         JFormattedTextField rowInput = new JFormattedTextField(
-                                                                                        createFormatter("##"));
+                                                                                        createDigitOnlyFormatter());
                                                                         rowInput.setName("rowInput_REMOVABLE");
                                                                         cardPanel.add(rowInput);
 
@@ -531,7 +555,7 @@ public class ContentService {
                                                                         // TODO: add check for inputs to have values
                                                                         // over 2
                                                                         JFormattedTextField colInput = new JFormattedTextField(
-                                                                                        createFormatter("##"));
+                                                                                        createDigitOnlyFormatter());
                                                                         colInput.setName("colInput_REMOVABLE");
                                                                         cardPanel.add(colInput);
 
@@ -552,10 +576,6 @@ public class ContentService {
                                                                                         colInput);
                                                                         // #endregion
 
-                                                                        algorithmCb.removeAllItems();
-                                                                        for (String algorithmEntry : Consts.ALGORIHMS_GRID) {
-                                                                                algorithmCb.addItem(algorithmEntry);
-                                                                        }
                                                                         break;
                                                                 default:
                                                                         System.err.println("ERROR: \"" + e.getItem()
@@ -620,13 +640,6 @@ public class ContentService {
                                 // #region Canvas
 
                                 JPanel canvas = InitializeEmptyCanvas();
-                                final CanvasService canvasServiceInstance = new CanvasService(canvas, "");
-                                canvas.addMouseListener(new MouseInputAdapter() {
-                                        @Override
-                                        public void mouseClicked(MouseEvent e) {
-                                                canvasServiceInstance.HandleCanvasClick(e);
-                                        }
-                                });
 
                                 layout.putConstraint(SpringLayout.WEST,
                                                 canvas,
@@ -788,7 +801,7 @@ public class ContentService {
         }
 
         private static JButton CreateToolboxButton(final String iconName, final JPanel canvas) {
-                ImageIcon icon = new ImageIcon("./data/img/cursor/images/Cursor_" + iconName + ".png");
+                ImageIcon icon = new ImageIcon(Consts.CUSTOM_CURSOR_PATH + "_" + iconName + ".png");
                 Image scaledIcon = icon.getImage()
                                 .getScaledInstance(Consts.TOOLBOX_HEIGHT, Consts.TOOLBOX_HEIGHT, Image.SCALE_SMOOTH);
                 JButton button = new JButton(new ImageIcon(scaledIcon));
@@ -804,7 +817,7 @@ public class ContentService {
                         public void actionPerformed(ActionEvent e) {
                                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                                 Image cursorIcon = toolkit
-                                                .getImage("./data/img/cursor/images/Cursor_" + iconName + ".png");
+                                                .getImage(Consts.CUSTOM_CURSOR_PATH + "_" + iconName + ".png");
                                 Cursor customCursor = toolkit.createCustomCursor(cursorIcon, new Point(0, 0), iconName);
                                 canvas.setCursor(customCursor);
                         }
@@ -814,19 +827,40 @@ public class ContentService {
         }
 
         private static JPanel InitializeEmptyCanvas() {
+
+                final String dataSet = SessionStorageService.ReadSessionStorage();
+
                 JPanel canvas = new JPanel();
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
-                Image cursorIcon = toolkit.getImage("./data/img/cursor/images/Cursor_Original.png");
+                Image cursorIcon = toolkit.getImage(Consts.CUSTOM_CURSOR_PATH + "_Original.png");
                 Cursor customCursor = toolkit.createCustomCursor(cursorIcon, new Point(0, 0), "Original");
                 canvas.setCursor(customCursor);
 
+                // TODO: add JPanel for GRID graph
+                final CanvasService canvasServiceInstance = new CanvasService(canvas);
+                canvas.addMouseListener(new MouseInputAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                                switch (dataSet) {
+                                        case "ORIENTED":
+                                                // TODO: add handleClick for other types of graph
+                                                break;
+                                        case "UNORIENTED":
+                                                canvasServiceInstance.HandleUnorientedGraphClick(e);
+                                                break;
+                                        default:
+                                }
+                        }
+                });
                 return canvas;
         }
 
-        protected static MaskFormatter createFormatter(String s) {
+        protected static MaskFormatter createDigitOnlyFormatter() {
                 MaskFormatter formatter = null;
                 try {
-                        formatter = new MaskFormatter(s);
+                        formatter = new MaskFormatter("##");
+                        formatter.setPlaceholder("00");
+                        formatter.setValidCharacters("0123456789");
                 } catch (Exception e) {
                         System.err.println("ERROR: Bad format string when creating grid size input!");
                 }

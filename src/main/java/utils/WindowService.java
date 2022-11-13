@@ -3,16 +3,21 @@ package utils;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import utils.DataStorageServices.SessionStorageService;
+import utils.DataStorageServices.LocalDataService.SaveEntry;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class WindowService {
     public static void OpenEntryDialogue() {
         CreateWindow("dialogueSettings");
     }
 
-    public static void OpenDefaultWindow() {
+    public static void OpenMainWindow() {
         CreateWindow("mainWindow");
     }
 
@@ -39,6 +44,15 @@ public class WindowService {
                 return;
         }
         JFrame window = new JFrame(windowTitle);
+        // Remove "sessionStorage" local storage file
+        window.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                // TODO: Add are you sure you want to exit dialogue, save cancel exit
+                SessionStorageService.DeleteSessionStorage();
+                System.exit(0);
+            }
+        });
 
         // What happens when the window closes?
         window.setDefaultCloseOperation(closingOperation);
@@ -61,8 +75,20 @@ public class WindowService {
         // Add the menubar to the window
         MenuService.LoadMenubar(windowName, window);
 
-        // Add the content to the window
-        JPanel windowContent = ContentService.LoadContent(windowName, window);
+        boolean isGraph = true;
+        String dataSet = SessionStorageService.ReadSessionStorage();
+        if (dataSet != null) {
+            isGraph = dataSet.contains("ORIENTED");
+        }
+
+        JPanel windowContent = null;
+        if (isGraph) {
+            // Add the content to the window
+            windowContent = ContentService.LoadContent(windowName, window);
+        } else {
+            // TODO: add logic to draw the grid canvas
+            System.out.println("Grid content logic required");
+        }
         if (windowContent == null) {
             System.out.println("Window content creation returned null!");
             System.exit(0);

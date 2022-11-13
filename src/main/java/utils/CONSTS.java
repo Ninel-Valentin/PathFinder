@@ -26,6 +26,7 @@ public class Consts {
     public static int DIALOGUE_BUTTON_MARGIN_H = 55;
 
     public static int DIALOGUE_GRIDSIZE_INPUT_WIDTH = 95;
+    public static Color DIALOGUE_GRIDSIZE_WRONG_COLOR = new Color(255, 150, 120);
     // #endregion
 
     // #region Entry Dialogue data
@@ -35,7 +36,7 @@ public class Consts {
     public static String DIALOGUE_TITLE = "Pathfinder - Entry";
     public static int DIALOGUE_CLOSING = JFrame.EXIT_ON_CLOSE;
     public static boolean DIALOGUE_FULLSCREEN = false;
-    public static Dimension DIALOGUE_WINDOW_SIZE = new Dimension(300,500);
+    public static Dimension DIALOGUE_WINDOW_SIZE = new Dimension(300, 500);
     // #endregion
 
     // #region Main - Toolbox design
@@ -49,7 +50,8 @@ public class Consts {
     public static int CANVAS_PADDING = 10;
     // #endregion
 
-    // #region Nodes design
+    // #region Main - Canvas design
+    public static String CUSTOM_CURSOR_PATH = "./data/img/cursor/images/Cursor";
     public static int NODE_RADIUS = 50;
     // #endregion
 
@@ -57,6 +59,16 @@ public class Consts {
     public static String MAIN_TITLE = "Pathfinder - Application";
     public static int MAIN_CLOSING = JFrame.EXIT_ON_CLOSE;
     public static boolean MAIN_FULLSCREEN = true;
+    // #endregion
+
+    // #region Local Storage
+
+    // Local
+    public static String LOCAL_STORAGE_DIRECTORY_PATH = System.getenv("APPDATA") + "\\PathfinderApp\\saves";
+
+    // Active
+    public static String SESSION_STORAGE_PATH = ".\\data\\settings\\sessionStorage.txt";
+
     // #endregion
 
 }
