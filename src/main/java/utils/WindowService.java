@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import utils.DataStorageServices.SessionStorageService;
-import utils.DataStorageServices.LocalDataService.SaveEntry;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -40,7 +39,7 @@ public class WindowService {
                 isFullscreen = Consts.MAIN_FULLSCREEN;
                 break;
             default:
-                System.err.println("ERROR: \"" + windowName + "\" is not a handled windowName in CreateWindow method.");
+                System.err.println("\"" + windowName + "\" is not a handled windowName in CreateWindow method.");
                 return;
         }
         JFrame window = new JFrame(windowTitle);
@@ -89,6 +88,7 @@ public class WindowService {
             // TODO: add logic to draw the grid canvas
             System.out.println("Grid content logic required");
         }
+
         if (windowContent == null) {
             System.out.println("Window content creation returned null!");
             System.exit(0);

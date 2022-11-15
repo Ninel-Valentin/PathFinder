@@ -8,7 +8,7 @@ public class App {
 
         // Anti-aliasing for text and images
         System.setProperty("swing.aatext", "true");
-        System.out.println("Hello, World.");
+        // WindowService.OpenMainWindow();
         WindowService.OpenEntryDialogue();
 
         // LocalDataService.SaveLocalData();

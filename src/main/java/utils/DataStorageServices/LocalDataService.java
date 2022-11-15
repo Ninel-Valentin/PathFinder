@@ -81,8 +81,7 @@ public class LocalDataService {
         return parsedSaveEntry;
     }
 
-    public static String GetNextAvailableFileName() {
-
+    public static File[] GetAllSaveFilePaths() {
         // Find next index of unused file
         File localDataSaves = new File(Consts.LOCAL_STORAGE_DIRECTORY_PATH);
 
@@ -102,12 +101,17 @@ public class LocalDataService {
             }
         };
 
+        return localDataSaves.listFiles(textFilter);
+    }
+
+    public static String GetNextAvailableFileName() {
+
         // Get the very first index unused
-        String[] filePathNames = localDataSaves.list(textFilter);
+        File[] filePathNames = GetAllSaveFilePaths();
         int index = 0;
         if (filePathNames != null) {
-            for (String filePathName : filePathNames) {
-                int fileIndex = Integer.valueOf(filePathName
+            for (File filePathName : filePathNames) {
+                int fileIndex = Integer.valueOf(filePathName.getName()
                         .replace("save", "")
                         .replace(".txt", ""));
                 if (fileIndex == index)

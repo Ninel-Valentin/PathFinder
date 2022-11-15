@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.awt.RenderingHints;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,12 +28,15 @@ import javax.swing.SwingConstants;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.text.MaskFormatter;
 
+import utils.CanvasServices.CanvasUnorientedGraphService;
+import utils.DataStorageServices.LocalDataService;
 import utils.DataStorageServices.SessionStorageService;
-import utils.DataStorageServices.LocalDataService.SaveEntry;
 
 import javax.swing.ImageIcon;
 
 public class ContentService {
+        public static JLabel logRef;
+
         public static JPanel LoadContent(String windowName, final JFrame window) {
                 SpringLayout layout = new SpringLayout();
                 final JPanel contentPanel = new JPanel(layout);
@@ -254,70 +258,95 @@ public class ContentService {
                                 recentFilesPanel.setBackground(Consts.BG_COLOR);
                                 contentPanel.add(recentFilesPanel);
 
-                                // TODO: MODIFY TO READ FROM FILE | MAX 8 ENTRIES
-                                String[] recentFiles = {
-                                                "C:\\Users\\valen\\Desktop\\Projects\\Github\\PathFinder\\",
-                                                "C:\\Users\\Georg\\Github\\FinderPath\\",
-                                                "C:\\Users\\valentin\\Desktop\\DoNotEnter\\TestDir\\",
-                                                "C:\\Users\\someoneElse\\Projects\\Testing\\",
-                                                "C:\\Users\\valen\\Desktop\\Projects\\Github\\PathFinder\\",
-                                                "C:\\Users\\Georg\\Github\\FinderPath\\",
-                                                "C:\\Users\\valentin\\Desktop\\DoNotEnter\\TestDir\\",
-                                                "C:\\Users\\someoneElse\\Projects\\Testing\\"
-                                };
-
+                                File[] recentFiles = LocalDataService.GetAllSaveFilePaths();
                                 int rowPadding = 0;
-                                for (String recentFile : recentFiles) {
-
-                                        JButton recentFileButton = new JButton(recentFile);
-                                        recentFileButton.addActionListener(new ActionListener() {
-                                                public void actionPerformed(ActionEvent e) {
-                                                        System.out.println("Opening "
-                                                                        + ((JButton) e.getSource()).getText());
-                                                }
-                                        });
-                                        recentFileButton.setHorizontalAlignment(SwingConstants.LEFT);
-                                        recentFileButton.setForeground(Color.WHITE);
-                                        recentFileButton.setBackground(Consts.MENU_COLOR);
-                                        // Make the background transparent for the button
-                                        recentFileButton.setBorderPainted(false);
-                                        recentFileButton.setBorder(null);
-
-                                        // Add hover effect on the buttons
-                                        recentFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
-                                                public void mouseEntered(MouseEvent evt) {
-                                                        ((JButton) evt.getSource())
-                                                                        .setBackground(Consts.MENU_BTN_COLOR_HOVER);
-                                                }
-
-                                                public void mouseExited(MouseEvent evt) {
-                                                        ((JButton) evt.getSource()).setBackground(Consts.MENU_COLOR);
-                                                }
-                                        });
+                                if (recentFiles.length == 0) {
+                                        // Display message if no save files are available
+                                        JLabel noRecentFilesLbl = new JLabel("Hmmm... No recent saves found!",
+                                                        SwingConstants.CENTER);
+                                        noRecentFilesLbl.setForeground(Color.WHITE);
+                                        recentFilesPanel.setBackground(Consts.MENU_COLOR);
 
                                         recentLayout.putConstraint(SpringLayout.NORTH,
-                                                        recentFileButton,
+                                                        noRecentFilesLbl,
                                                         rowPadding,
                                                         SpringLayout.NORTH,
                                                         recentFilesPanel);
                                         recentLayout.putConstraint(SpringLayout.SOUTH,
-                                                        recentFileButton,
+                                                        noRecentFilesLbl,
                                                         Consts.RECENT_FILE_ROW_HEIGHT,
                                                         SpringLayout.NORTH,
-                                                        recentFileButton);
+                                                        noRecentFilesLbl);
                                         recentLayout.putConstraint(SpringLayout.WEST,
-                                                        recentFileButton,
+                                                        noRecentFilesLbl,
                                                         0,
                                                         SpringLayout.WEST,
                                                         recentFilesPanel);
                                         recentLayout.putConstraint(SpringLayout.EAST,
-                                                        recentFileButton,
+                                                        noRecentFilesLbl,
                                                         0,
                                                         SpringLayout.EAST,
                                                         recentFilesPanel);
-                                        recentFilesPanel.add(recentFileButton);
+                                        recentFilesPanel.add(noRecentFilesLbl);
+                                } else {
+                                        // Display buttons to load the files if any are available in the save directory
+                                        for (int i = 0; i < Consts.NUMBER_OF_READ_FILES; i++) {
+                                                File recentFile = recentFiles[i];
+                                                JButton recentFileButton = new JButton(recentFile.getName());
+                                                recentFileButton.setToolTipText(
+                                                                "<html>Absolute path:<br>" + recentFile.getPath()
+                                                                                + "</html>");
+                                                recentFileButton.addActionListener(new ActionListener() {
+                                                        public void actionPerformed(ActionEvent e) {
+                                                                // TODO: Existing project opening logic.
+                                                                System.out.println("Opening "
+                                                                                + ((JButton) e.getSource()).getText());
+                                                        }
+                                                });
+                                                recentFileButton.setHorizontalAlignment(SwingConstants.LEFT);
+                                                recentFileButton.setForeground(Color.WHITE);
+                                                recentFileButton.setBackground(Consts.MENU_COLOR);
+                                                // Make the background transparent for the button
+                                                recentFileButton.setBorderPainted(false);
+                                                recentFileButton.setBorder(null);
 
-                                        rowPadding += Consts.RECENT_FILE_ROW_HEIGHT;
+                                                // Add hover effect on the buttons
+                                                recentFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
+                                                        public void mouseEntered(MouseEvent evt) {
+                                                                ((JButton) evt.getSource())
+                                                                                .setBackground(Consts.MENU_BTN_COLOR_HOVER);
+                                                        }
+
+                                                        public void mouseExited(MouseEvent evt) {
+                                                                ((JButton) evt.getSource())
+                                                                                .setBackground(Consts.MENU_COLOR);
+                                                        }
+                                                });
+
+                                                recentLayout.putConstraint(SpringLayout.NORTH,
+                                                                recentFileButton,
+                                                                rowPadding,
+                                                                SpringLayout.NORTH,
+                                                                recentFilesPanel);
+                                                recentLayout.putConstraint(SpringLayout.SOUTH,
+                                                                recentFileButton,
+                                                                Consts.RECENT_FILE_ROW_HEIGHT,
+                                                                SpringLayout.NORTH,
+                                                                recentFileButton);
+                                                recentLayout.putConstraint(SpringLayout.WEST,
+                                                                recentFileButton,
+                                                                0,
+                                                                SpringLayout.WEST,
+                                                                recentFilesPanel);
+                                                recentLayout.putConstraint(SpringLayout.EAST,
+                                                                recentFileButton,
+                                                                0,
+                                                                SpringLayout.EAST,
+                                                                recentFilesPanel);
+                                                recentFilesPanel.add(recentFileButton);
+
+                                                rowPadding += Consts.RECENT_FILE_ROW_HEIGHT;
+                                        }
                                 }
 
                                 layout.putConstraint(SpringLayout.WEST,
@@ -365,7 +394,7 @@ public class ContentService {
                                                                                                         break;
                                                                                                 default:
                                                                                                         System.err.println(
-                                                                                                                        "ERROR: \"" + type
+                                                                                                                        "\"" + type
                                                                                                                                         + "\" is not a valid secondary dataset!");
                                                                                         }
                                                                                         break;
@@ -432,7 +461,7 @@ public class ContentService {
                                                                 break;
                                                         default:
                                                                 System.err.println(
-                                                                                "ERROR: \"" + canvasCb.getSelectedItem()
+                                                                                "\"" + canvasCb.getSelectedItem()
                                                                                                 + "\" is not a valid setting!");
                                                 }
                                                 if (dataInfo != "ERROR") {
@@ -578,7 +607,7 @@ public class ContentService {
 
                                                                         break;
                                                                 default:
-                                                                        System.err.println("ERROR: \"" + e.getItem()
+                                                                        System.err.println("\"" + e.getItem()
                                                                                         + "\" is not a handled canvas type");
                                                         }
                                                         cardPanel.revalidate();
@@ -586,8 +615,7 @@ public class ContentService {
                                                 }
                                         }
                                 });
-
-                                break;
+                                return contentPanel;
                         case "mainWindow":
                                 SpringLayout toolboxLayout = new SpringLayout();
                                 JPanel toolboxPanel = new JPanel(toolboxLayout) {
@@ -671,7 +699,6 @@ public class ContentService {
 
                                 int buttonCount = 3;
                                 int remainingSpace = Consts.TOOLBOX_WIDTH - buttonCount * Consts.TOOLBOX_HEIGHT;
-                                int buttonSpacingBetween = remainingSpace / (buttonCount + 1);
                                 int buttonSpacingAround = remainingSpace / (buttonCount * 2);
                                 int labelSize = Consts.TOOLBOX_WIDTH / buttonCount;
 
@@ -792,12 +819,91 @@ public class ContentService {
 
                                 // #endregion Toolbox
 
-                                break;
+                                SpringLayout windowLayout = new SpringLayout();
+                                JPanel fullContent = new JPanel(windowLayout);
+                                SpringLayout logLayout = new SpringLayout();
+                                JPanel logPanel = new JPanel(logLayout);
+                                logPanel.setBackground(Consts.BG_COLOR);
+
+                                JLabel logLbl = new JLabel();
+
+                                logLayout.putConstraint(SpringLayout.NORTH,
+                                                logLbl,
+                                                0,
+                                                SpringLayout.NORTH,
+                                                logPanel);
+                                logLayout.putConstraint(SpringLayout.SOUTH,
+                                                logLbl,
+                                                0,
+                                                SpringLayout.SOUTH,
+                                                logPanel);
+                                logLayout.putConstraint(SpringLayout.EAST,
+                                                logLbl,
+                                                0,
+                                                SpringLayout.EAST,
+                                                logPanel);
+                                logLayout.putConstraint(SpringLayout.WEST,
+                                                logLbl,
+                                                0,
+                                                SpringLayout.WEST,
+                                                logPanel);
+
+                                logLbl.setForeground(Color.WHITE);
+
+                                // Save reference to the class
+                                logRef = logLbl;
+                                logPanel.add(logLbl);
+
+                                fullContent.add(contentPanel);
+                                fullContent.add(logPanel);
+
+                                // Set constraints for the two panels
+                                windowLayout.putConstraint(SpringLayout.WEST,
+                                                logPanel,
+                                                0,
+                                                SpringLayout.WEST,
+                                                fullContent);
+                                windowLayout.putConstraint(SpringLayout.EAST,
+                                                logPanel,
+                                                0,
+                                                SpringLayout.EAST,
+                                                fullContent);
+                                windowLayout.putConstraint(SpringLayout.SOUTH,
+                                                logPanel,
+                                                0,
+                                                SpringLayout.SOUTH,
+                                                fullContent);
+                                windowLayout.putConstraint(SpringLayout.NORTH,
+                                                logPanel,
+                                                -Consts.LOGGER_HEIGHT,
+                                                SpringLayout.SOUTH,
+                                                fullContent);
+
+                                windowLayout.putConstraint(SpringLayout.WEST,
+                                                contentPanel,
+                                                0,
+                                                SpringLayout.WEST,
+                                                fullContent);
+                                windowLayout.putConstraint(SpringLayout.EAST,
+                                                contentPanel,
+                                                0,
+                                                SpringLayout.EAST,
+                                                fullContent);
+                                windowLayout.putConstraint(SpringLayout.NORTH,
+                                                contentPanel,
+                                                0,
+                                                SpringLayout.NORTH,
+                                                fullContent);
+                                windowLayout.putConstraint(SpringLayout.SOUTH,
+                                                contentPanel,
+                                                0,
+                                                SpringLayout.NORTH,
+                                                logPanel);
+                                return fullContent;
                         default:
                                 System.out.println("\"" + windowName + "\" is not a specified value in ContentService");
                                 return null;
                 }
-                return contentPanel;
         }
 
         private static JButton CreateToolboxButton(final String iconName, final JPanel canvas) {
@@ -835,18 +941,27 @@ public class ContentService {
                 Image cursorIcon = toolkit.getImage(Consts.CUSTOM_CURSOR_PATH + "_Original.png");
                 Cursor customCursor = toolkit.createCustomCursor(cursorIcon, new Point(0, 0), "Original");
                 canvas.setCursor(customCursor);
-
+                Object canvasService = null;
+                switch (dataSet) {
+                        case "ORIENTED":
+                                // TODO: add handleClick for other types of graph
+                                break;
+                        case "UNORIENTED":
+                                canvasService = new CanvasUnorientedGraphService(canvas);
+                                break;
+                        default:
+                }
+                final Object finalCanvasService = canvasService;
                 // TODO: add JPanel for GRID graph
-                final CanvasService canvasServiceInstance = new CanvasService(canvas);
                 canvas.addMouseListener(new MouseInputAdapter() {
                         @Override
-                        public void mouseClicked(MouseEvent e) {
+                        public void mouseReleased(MouseEvent e) {
                                 switch (dataSet) {
                                         case "ORIENTED":
                                                 // TODO: add handleClick for other types of graph
                                                 break;
                                         case "UNORIENTED":
-                                                canvasServiceInstance.HandleUnorientedGraphClick(e);
+                                                ((CanvasUnorientedGraphService) finalCanvasService).HandleClick(e);
                                                 break;
                                         default:
                                 }
@@ -862,7 +977,7 @@ public class ContentService {
                         formatter.setPlaceholder("00");
                         formatter.setValidCharacters("0123456789");
                 } catch (Exception e) {
-                        System.err.println("ERROR: Bad format string when creating grid size input!");
+                        System.err.println("Bad format string when creating grid size input!");
                 }
                 return formatter;
         }
