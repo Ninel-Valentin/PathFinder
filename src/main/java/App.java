@@ -4,12 +4,12 @@ import utils.DataStorageServices.SessionStorageService;
 public class App {
     public static void main(String[] args) {
         // Tries to delete the "sessionStorage" local storage file to assure it is deleted.
-        SessionStorageService.DeleteSessionStorage();
+        // SessionStorageService.DeleteSessionStorage();
 
         // Anti-aliasing for text and images
         System.setProperty("swing.aatext", "true");
-        // WindowService.OpenMainWindow();
-        WindowService.OpenEntryDialogue();
+        WindowService.OpenMainWindow();
+        // WindowService.OpenEntryDialogue();
 
         // LocalDataService.SaveLocalData();
 

@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Cursor;
+import java.awt.Font;
 
 import utils.Consts;
 import utils.LoggingService;
@@ -77,7 +78,7 @@ public class CanvasUnorientedGraphService {
                     selectedNode.displayName);
         }
         activeNodeIndex = node.id;
-        PaintNode(Consts.NODE_DEFAULT_COLOR,
+        PaintNodeWithBorder(Consts.NODE_DEFAULT_COLOR,
                 (int) node.x,
                 (int) node.y,
                 Consts.NODE_RADIUS - Consts.NODE_MARGIN_RADIUS / 2,
@@ -140,10 +141,17 @@ public class CanvasUnorientedGraphService {
                 radius,
                 radius);
         graphics.setColor(textColor);
-        graphics.drawString(name, x, y);
+        Font nodeStringFont = g.getFont();
+        float fontSize = nodeStringFont.getSize() * Consts.NODE_TEXT_FONT_SIZE;
+        nodeStringFont = nodeStringFont.deriveFont(fontSize);
+        graphics.setFont(nodeStringFont);
+        graphics.drawString(name,
+                x - ((fontSize + Consts.NODE_MARGIN_RADIUS) * name.length()) / (2 * Consts.NODE_TEXT_FONT_SIZE),
+                y + fontSize / (2 * Consts.NODE_TEXT_FONT_SIZE));
     }
 
-    private void PaintNode(Color color, int x, int y, int radius, Color textColor, String name, Color borderColor,
+    private void PaintNodeWithBorder(Color color, int x, int y, int radius, Color textColor, String name,
+            Color borderColor,
             int borderRadius) {
         Graphics g = canvas.getGraphics();
         Graphics2D graphics = (Graphics2D) g;
@@ -164,6 +172,13 @@ public class CanvasUnorientedGraphService {
                 radius);
 
         graphics.setColor(textColor);
-        graphics.drawString(name, x, y);
+        Font nodeStringFont = g.getFont();
+        float fontSize = nodeStringFont.getSize() * Consts.NODE_TEXT_FONT_SIZE;
+        nodeStringFont = nodeStringFont.deriveFont(fontSize);
+        graphics.setFont(nodeStringFont);
+        // Multiply by length of name, to center when having more digits
+        graphics.drawString(name,
+                x - ((fontSize + Consts.NODE_MARGIN_RADIUS) * name.length()) / (2 * Consts.NODE_TEXT_FONT_SIZE),
+                y + fontSize / (2 * Consts.NODE_TEXT_FONT_SIZE));
     }
 }

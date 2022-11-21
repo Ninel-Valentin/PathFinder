@@ -59,8 +59,10 @@ public class Consts {
     public static final int NODE_ERASE_RADIUS = 4;
 
     public static final Color NODE_DEFAULT_COLOR = Color.WHITE;
-    public static final Color NODE_ACTIVE_BORDER_COLOR = Color.BLUE;
+    public static final Color NODE_ACTIVE_BORDER_COLOR = new Color(75, 135, 0);
 
+    // Has to be float to account as Size | if int it accounts as Style
+    public static final float NODE_TEXT_FONT_SIZE = 2F;
     public static final Color NODE_NEW_TEXT_COLOR = Color.BLACK;
     public static final Color NODE_ACTIVE_TEXT_COLOR = Color.BLACK;
     public static final Color NODE_START_TEXT_COLOR = Color.BLACK;
