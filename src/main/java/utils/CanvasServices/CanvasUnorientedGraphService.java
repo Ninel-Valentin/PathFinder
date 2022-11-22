@@ -65,38 +65,38 @@ public class CanvasUnorientedGraphService {
         if (activeNodeIndex >= 0) {
             Node selectedNode = graph.GetNode(activeNodeIndex);
             // Erase node with border
-            PaintNode(Consts.BG_COLOR,
+            PaintNode(Consts.MenuBar.MENU_BG_COLOR,
                     (int) selectedNode.x,
                     (int) selectedNode.y,
-                    Consts.NODE_RADIUS + Consts.NODE_ERASE_RADIUS);
+                    Consts.Main.Window.Canvas.Node.RADIUS + Consts.Main.Window.Canvas.Node.ERASE_RADIUS);
             // Draw node without border
-            PaintNode(Consts.NODE_DEFAULT_COLOR,
+            PaintNode(Consts.Main.Window.Canvas.Node.DEFAULT_COLOR,
                     (int) selectedNode.x,
                     (int) selectedNode.y,
-                    Consts.NODE_RADIUS,
-                    Consts.NODE_NEW_TEXT_COLOR,
+                    Consts.Main.Window.Canvas.Node.RADIUS,
+                    Consts.Main.Window.Canvas.Node.NEW_TEXT_COLOR,
                     selectedNode.displayName);
         }
         activeNodeIndex = node.id;
-        PaintNodeWithBorder(Consts.NODE_DEFAULT_COLOR,
+        PaintNodeWithBorder(Consts.Main.Window.Canvas.Node.DEFAULT_COLOR,
                 (int) node.x,
                 (int) node.y,
-                Consts.NODE_RADIUS - Consts.NODE_MARGIN_RADIUS / 2,
-                Consts.NODE_ACTIVE_TEXT_COLOR,
+                Consts.Main.Window.Canvas.Node.RADIUS - Consts.Main.Window.Canvas.Node.MARGIN_RADIUS / 2,
+                Consts.Main.Window.Canvas.Node.ACTIVE_TEXT_COLOR,
                 node.displayName,
-                Consts.NODE_ACTIVE_BORDER_COLOR,
-                Consts.NODE_RADIUS + Consts.NODE_MARGIN_RADIUS / 2);
+                Consts.Main.Window.Canvas.Node.ACTIVE_BORDER_COLOR,
+                Consts.Main.Window.Canvas.Node.RADIUS + Consts.Main.Window.Canvas.Node.MARGIN_RADIUS / 2);
     }
 
     private void CreateNode(MouseEvent e) {
         int x = e.getX(),
                 y = e.getY();
-        int footerOffset = (canvas.getWidth() - Consts.TOOLBOX_WIDTH) / 2;
-        int enforcedRadius = Consts.NODE_MARGIN_RADIUS + Consts.NODE_RADIUS;
+        int footerOffset = (canvas.getWidth() - Consts.Main.Window.ToolBox.WIDTH) / 2;
+        int enforcedRadius = Consts.Main.Window.Canvas.Node.MARGIN_RADIUS + Consts.Main.Window.Canvas.Node.RADIUS;
         int boundLeftX = footerOffset - enforcedRadius;
-        int boundRightX = footerOffset + enforcedRadius + Consts.TOOLBOX_WIDTH;
+        int boundRightX = footerOffset + enforcedRadius + Consts.Main.Window.ToolBox.WIDTH;
         int boundY = canvas.getHeight()
-                - (Consts.TOOLBOX_HEIGHT - Consts.CANVAS_PADDING + enforcedRadius);
+                - (Consts.Main.Window.ToolBox.HEIGHT - Consts.Main.Window.Canvas.PADDING + enforcedRadius);
         // Paint nodes only above toolbox
         if (y < boundY || x < boundLeftX || x > boundRightX) {
             int index = graph.GetNextAvailableIndex();
@@ -109,10 +109,10 @@ public class CanvasUnorientedGraphService {
     private void RemoveNode(MouseEvent e) {
         Node node = graph.GetNode(e.getX(), e.getY());
         graph.RemoveNode(node);
-        PaintNode(Consts.BG_COLOR,
+        PaintNode(Consts.MenuBar.MENU_BG_COLOR,
                 (int) node.x,
                 (int) node.y,
-                Consts.NODE_RADIUS + Consts.NODE_ERASE_RADIUS);
+                Consts.Main.Window.Canvas.Node.RADIUS + Consts.Main.Window.Canvas.Node.ERASE_RADIUS);
         // Reset the activeNodeIndex
         if (activeNodeIndex == node.id)
             activeNodeIndex = -1;
@@ -142,12 +142,13 @@ public class CanvasUnorientedGraphService {
                 radius);
         graphics.setColor(textColor);
         Font nodeStringFont = g.getFont();
-        float fontSize = nodeStringFont.getSize() * Consts.NODE_TEXT_FONT_SIZE;
+        float fontSize = nodeStringFont.getSize() * Consts.Main.Window.Canvas.Node.TEXT_FONT_SIZE;
         nodeStringFont = nodeStringFont.deriveFont(fontSize);
         graphics.setFont(nodeStringFont);
         graphics.drawString(name,
-                x - ((fontSize + Consts.NODE_MARGIN_RADIUS) * name.length()) / (2 * Consts.NODE_TEXT_FONT_SIZE),
-                y + fontSize / (2 * Consts.NODE_TEXT_FONT_SIZE));
+                x - ((fontSize + Consts.Main.Window.Canvas.Node.MARGIN_RADIUS) * name.length())
+                        / (2 * Consts.Main.Window.Canvas.Node.TEXT_FONT_SIZE),
+                y + fontSize / (2 * Consts.Main.Window.Canvas.Node.TEXT_FONT_SIZE));
     }
 
     private void PaintNodeWithBorder(Color color, int x, int y, int radius, Color textColor, String name,
@@ -173,12 +174,13 @@ public class CanvasUnorientedGraphService {
 
         graphics.setColor(textColor);
         Font nodeStringFont = g.getFont();
-        float fontSize = nodeStringFont.getSize() * Consts.NODE_TEXT_FONT_SIZE;
+        float fontSize = nodeStringFont.getSize() * Consts.Main.Window.Canvas.Node.TEXT_FONT_SIZE;
         nodeStringFont = nodeStringFont.deriveFont(fontSize);
         graphics.setFont(nodeStringFont);
         // Multiply by length of name, to center when having more digits
         graphics.drawString(name,
-                x - ((fontSize + Consts.NODE_MARGIN_RADIUS) * name.length()) / (2 * Consts.NODE_TEXT_FONT_SIZE),
-                y + fontSize / (2 * Consts.NODE_TEXT_FONT_SIZE));
+                x - ((fontSize + Consts.Main.Window.Canvas.Node.MARGIN_RADIUS) * name.length())
+                        / (2 * Consts.Main.Window.Canvas.Node.TEXT_FONT_SIZE),
+                y + fontSize / (2 * Consts.Main.Window.Canvas.Node.TEXT_FONT_SIZE));
     }
 }

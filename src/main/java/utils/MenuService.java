@@ -7,24 +7,25 @@ import javax.swing.JMenuBar;
 import javax.swing.SpringLayout;
 import javax.swing.UIManager;
 
+import utils.Consts.ButtonState;
+
 import java.awt.Dimension;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseAdapter;
 
 public class MenuService {
-    public static void LoadMenubar( String windowName, JFrame window) {
+    public static void LoadMenubar(String windowName, JFrame window, ButtonState[] stateOfButtons) {
         JMenuBar menuBar;
 
         // Instantiate the menu bar
         menuBar = new JMenuBar();
-        UIManager.put("MenuBar.background", Consts.MENU_COLOR);
-        Dimension windowSize = new Dimension(window.getSize().width, Consts.MENU_BTN_SIZE);
+        UIManager.put("MenuBar.background", Consts.MenuBar.MENU_BG_COLOR);
+        Dimension windowSize = new Dimension(window.getSize().width, Consts.MenuBar.BTN_SIZE);
         menuBar.setPreferredSize(windowSize);
         menuBar.setSize(windowSize);
         menuBar.setBorder(null);
@@ -34,100 +35,113 @@ public class MenuService {
         SpringLayout layout = new SpringLayout();
         menuBar.setLayout(layout);
 
-        /*
-         * TODO: ADD ICONS FOR DISABLED AND READ FROM CUSTOM SETTINGS ENABLED DISABLED
-         * STATUS
-         */
+        // Instantiate a final version of the buttons state for use in the action
+        final ButtonState[] finalStateOfButtons = stateOfButtons;
 
-        // Add the common buttons on the MenuBar => exit|restore|minimize
+        // Create the buttons and their listeners
         JButton exitButton = CreateMenuButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // TODO: ENABLE THIS WHEN FINISHING DEV
+                // SessionStorageService.DeleteSessionStorage();
                 System.exit(0);
             }
         });
-        menuBar.add(exitButton);
 
-        JButton restoreButton = CreateMenuButton("RestoreUp");
+        String restoreIconName = stateOfButtons[1] == ButtonState.DISABLED ? "RestoreDown-disabled" : "RestoreDown";
+        JButton restoreButton = CreateMenuButton(restoreIconName);
         restoreButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Restored");
+                JButton src = (JButton) e.getSource();
+                String name = src.getName();
+
+                if (!name.contains("-disabled")) {
+                    if (name.contains("Up")) {
+                        WindowService.activeMainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    } else {
+                        WindowService.activeMainWindow.setSize(800, 800);
+                    }
+
+                    String newName = name.contains("Up") ? name.replace("Up", "Down") : name.replace("Down", "Up");
+                    src.setName(newName);
+                    ImageIcon icon = new ImageIcon("./data/img/menuBarButtons/" + newName + ".png");
+                    Image scaledIcon = icon.getImage()
+                            .getScaledInstance(Consts.MenuBar.BTN_SIZE, Consts.MenuBar.BTN_SIZE, Image.SCALE_SMOOTH);
+                    src.setIcon(new ImageIcon(scaledIcon));
+                }
             }
         });
-        menuBar.add(restoreButton);
 
-        JButton minimizeButton = CreateMenuButton("Minimize");
+        String minimizedIconName = stateOfButtons[0] == ButtonState.DISABLED ? "Minimize-disabled" : "Minimize";
+        JButton minimizeButton = CreateMenuButton(minimizedIconName);
         minimizeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("minimized");
+                WindowService.activeMainWindow.setState(JFrame.ICONIFIED);
             }
         });
+
+        // Add the buttons the the menuBar
+        menuBar.add(exitButton);
+        menuBar.add(restoreButton);
         menuBar.add(minimizeButton);
 
-        // After adding the buttons, we need to set constraints for the layout
-        layout.putConstraint(SpringLayout.WEST, exitButton, -Consts.MENU_BTN_SIZE, SpringLayout.EAST, menuBar);
+        // Add the buttons to the layout
+        layout.putConstraint(SpringLayout.WEST, exitButton, -Consts.MenuBar.BTN_SIZE, SpringLayout.EAST, menuBar);
         layout.putConstraint(SpringLayout.EAST, restoreButton, 0, SpringLayout.WEST, exitButton);
         layout.putConstraint(SpringLayout.EAST, minimizeButton, 0, SpringLayout.WEST, restoreButton);
 
-        // menuBar.add(menu);
+        window.addMouseMotionListener(new CustomMouseMotionListener());
         window.setJMenuBar(menuBar);
     }
 
     private static JButton CreateMenuButton(String iconName) {
         ImageIcon icon = new ImageIcon("./data/img/menuBarButtons/" + iconName + ".png");
         Image scaledIcon = icon.getImage()
-                .getScaledInstance(Consts.MENU_BTN_SIZE, Consts.MENU_BTN_SIZE, Image.SCALE_SMOOTH);
+                .getScaledInstance(Consts.MenuBar.BTN_SIZE, Consts.MenuBar.BTN_SIZE, Image.SCALE_SMOOTH);
         JButton button = new JButton(new ImageIcon(scaledIcon));
-        button.setBackground(Consts.MENU_COLOR);
+        button.setName(iconName);
+        button.setBackground(Consts.MenuBar.MENU_BG_COLOR);
         // Make the background transparent for the button
         button.setBorderPainted(false);
         button.setBorder(null);
         // Resize button
-        button.setSize(Consts.MENU_BTN_SIZE, Consts.MENU_BTN_SIZE);
+        button.setSize(Consts.MenuBar.BTN_SIZE, Consts.MenuBar.BTN_SIZE);
 
         // Add hover effect on the buttons
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
+        button.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
-                ((JButton) evt.getSource()).setBackground(Consts.MENU_BTN_COLOR_HOVER);
+                ((JButton) evt.getSource()).setBackground(Consts.MenuBar.BTN_COLOR_HOVER);
             }
 
             public void mouseExited(MouseEvent evt) {
-                ((JButton) evt.getSource()).setBackground(Consts.MENU_COLOR);
+                ((JButton) evt.getSource()).setBackground(Consts.MenuBar.MENU_BG_COLOR);
             }
         });
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         return button;
     }
-}
 
-class MenuSettings {
-    ButtonState minimize;
-    ButtonState restore;
-    ButtonState exit;
+    public static class CustomMouseMotionListener implements MouseMotionListener {
+        public static int xOffset, yOffset;
 
-    public MenuSettings(JsonObject jsonData) {
-        // Get values
-        JsonElement _minimize = jsonData.get("minimize");
-        JsonElement _restore = jsonData.get("restore");
-        JsonElement _exit = jsonData.get("exit");
+        public void mouseDragged(MouseEvent e) {
+            if (xOffset == 0 || yOffset == 0) {
+                xOffset = (int) (e.getX());
+                yOffset = (int) (e.getY());
+            }
+            JFrame window = WindowService.activeMainWindow;
+            int newX = (int) (window.getLocation().getX() + e.getPoint().getX() - xOffset);
+            int newY = (int) (window.getLocation().getY() + e.getPoint().getY() - yOffset);
 
-        // Security check if they exist, otherwise set default values
-        this.minimize = _minimize == null ? ButtonState.ENABLED : ButtonState.valueOf(_minimize.getAsString());
-        this.restore = _restore == null ? ButtonState.ENABLED : ButtonState.valueOf(_restore.getAsString());
-        this.exit = _exit == null ? ButtonState.ENABLED : ButtonState.valueOf(_exit.getAsString());
+            WindowService.activeMainWindow.setLocation(newX, newY);
+        }
+
+        public void mouseMoved(MouseEvent e) {
+            if (xOffset != 0 || yOffset != 0) {
+                xOffset = yOffset = 0;
+            }
+        }
     }
 
-    public MenuSettings() {
-        this.minimize = ButtonState.ENABLED;
-        this.restore = ButtonState.ENABLED;
-        this.exit = ButtonState.ENABLED;
-    }
-
-}
-
-enum ButtonState {
-    ENABLED,
-    DISABLED,
-    REMOVED
 }

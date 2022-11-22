@@ -46,7 +46,7 @@ public class LocalDataService {
 
     public static SaveEntry ReadLocalDataFile(String fileName) {
         // Find next index of unused file
-        String localPath = Consts.LOCAL_STORAGE_DIRECTORY_PATH + "\\" + fileName;
+        String localPath = Consts.Storage.LOCAL_STORAGE_PATH + "\\" + fileName;
         File localDataSaves = new File(localPath);
         SaveEntry entry = null;
         if (localDataSaves.exists()) {
@@ -83,7 +83,7 @@ public class LocalDataService {
 
     public static File[] GetAllSaveFilePaths() {
         // Find next index of unused file
-        File localDataSaves = new File(Consts.LOCAL_STORAGE_DIRECTORY_PATH);
+        File localDataSaves = new File(Consts.Storage.LOCAL_STORAGE_PATH);
 
         if (!localDataSaves.exists()) {
             System.out.println("SYSTEM: Created local data saves directory!");
@@ -126,7 +126,7 @@ public class LocalDataService {
         // parser above
         parsedIndex = parsedIndex.substring(parsedIndex.length() - 3, parsedIndex.length());
 
-        String finalPath = Consts.LOCAL_STORAGE_DIRECTORY_PATH + "\\save" + parsedIndex + ".txt";
+        String finalPath = Consts.Storage.LOCAL_STORAGE_PATH + "\\save" + parsedIndex + ".txt";
         return finalPath;
     }
 

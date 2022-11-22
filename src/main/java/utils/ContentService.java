@@ -42,7 +42,7 @@ public class ContentService {
                 final JPanel contentPanel = new JPanel(layout);
                 switch (windowName) {
                         case "dialogueSettings":
-                                contentPanel.setBackground(Consts.BG_COLOR);
+                                contentPanel.setBackground(Consts.MenuBar.MENU_BG_COLOR);
                                 // #region App Title
                                 JLabel title = new JLabel("Application start-up settings", JLabel.CENTER);
                                 title.setForeground(Color.WHITE);
@@ -67,17 +67,17 @@ public class ContentService {
 
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 canvasTitle,
-                                                Consts.DIALOGUE_PADDING_CATEGORY_V,
+                                                Consts.Dialogue.Window.PADDING_CATEGORY_V,
                                                 SpringLayout.SOUTH,
                                                 title);
                                 layout.putConstraint(SpringLayout.EAST,
                                                 canvasTitle,
-                                                -Consts.DIALOGUE_PADDING_H,
+                                                -Consts.Dialogue.Window.PADDING_H,
                                                 SpringLayout.EAST,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.WEST,
                                                 canvasTitle,
-                                                Consts.DIALOGUE_PADDING_H,
+                                                Consts.Dialogue.Window.PADDING_H,
                                                 SpringLayout.WEST,
                                                 contentPanel);
                                 // #endregion
@@ -91,7 +91,7 @@ public class ContentService {
 
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 canvasCb,
-                                                Consts.DIALOGUE_PADDING_V,
+                                                Consts.Dialogue.Window.PADDING_V,
                                                 SpringLayout.SOUTH,
                                                 canvasTitle);
                                 layout.putConstraint(SpringLayout.EAST,
@@ -147,25 +147,25 @@ public class ContentService {
                                  * cardPanel);
                                  * cardLayout.putConstraint(SpringLayout.EAST,
                                  * algorithmTitle,
-                                 * -Consts.DIALOGUE_PADDING_H,
+                                 * -Consts.Dialogue.Window.PADDING_H,
                                  * SpringLayout.EAST,
                                  * cardPanel);
                                  * cardLayout.putConstraint(SpringLayout.WEST,
                                  * algorithmTitle,
-                                 * Consts.DIALOGUE_PADDING_H,
+                                 * Consts.Dialogue.Window.PADDING_H,
                                  * SpringLayout.WEST,
                                  * cardPanel);
                                  * // #endregion
                                  * 
                                  * // #region DropDown - Algorithm Type
-                                 * String algorithmCbItems[] = Consts.ALGORTIHMS_GRAPH;
+                                 * String algorithmCbItems[] = Consts.MenuBar.ALGORTIHMS_GRAPH;
                                  * final JComboBox<String> algorithmCb = new JComboBox<>(algorithmCbItems);
                                  * algorithmCb.setEditable(false);
                                  * cardPanel.add(algorithmCb);
                                  * 
                                  * cardLayout.putConstraint(SpringLayout.NORTH,
                                  * algorithmCb,
-                                 * Consts.DIALOGUE_PADDING_V,
+                                 * Consts.Dialogue.Window.PADDING_V,
                                  * SpringLayout.SOUTH, algorithmTitle);
                                  * cardLayout.putConstraint(SpringLayout.EAST,
                                  * algorithmCb,
@@ -188,17 +188,17 @@ public class ContentService {
 
                                 cardLayout.putConstraint(SpringLayout.NORTH,
                                                 graphGridTitle,
-                                                Consts.DIALOGUE_PADDING_V,
+                                                Consts.Dialogue.Window.PADDING_V,
                                                 SpringLayout.NORTH,
                                                 cardPanel);
                                 cardLayout.putConstraint(SpringLayout.EAST,
                                                 graphGridTitle,
-                                                -Consts.DIALOGUE_PADDING_H,
+                                                -Consts.Dialogue.Window.PADDING_H,
                                                 SpringLayout.EAST,
                                                 cardPanel);
                                 cardLayout.putConstraint(SpringLayout.WEST,
                                                 graphGridTitle,
-                                                Consts.DIALOGUE_PADDING_H,
+                                                Consts.Dialogue.Window.PADDING_H,
                                                 SpringLayout.WEST,
                                                 cardPanel);
                                 // #endregion
@@ -237,17 +237,17 @@ public class ContentService {
 
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 recentTitle,
-                                                Consts.DIALOGUE_PADDING_V,
+                                                Consts.Dialogue.Window.PADDING_V,
                                                 SpringLayout.SOUTH,
                                                 cardPanel);
                                 layout.putConstraint(SpringLayout.EAST,
                                                 recentTitle,
-                                                -Consts.DIALOGUE_PADDING_H,
+                                                -Consts.Dialogue.Window.PADDING_H,
                                                 SpringLayout.EAST,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.WEST,
                                                 recentTitle,
-                                                Consts.DIALOGUE_PADDING_H,
+                                                Consts.Dialogue.Window.PADDING_H,
                                                 SpringLayout.WEST,
                                                 contentPanel);
                                 // #endregion
@@ -255,7 +255,7 @@ public class ContentService {
                                 // #region Panel - Recent files
                                 SpringLayout recentLayout = new SpringLayout();
                                 JPanel recentFilesPanel = new JPanel(recentLayout);
-                                recentFilesPanel.setBackground(Consts.BG_COLOR);
+                                recentFilesPanel.setBackground(Consts.MenuBar.MENU_BG_COLOR);
                                 contentPanel.add(recentFilesPanel);
 
                                 File[] recentFiles = LocalDataService.GetAllSaveFilePaths();
@@ -265,7 +265,7 @@ public class ContentService {
                                         JLabel noRecentFilesLbl = new JLabel("Hmmm... No recent saves found!",
                                                         SwingConstants.CENTER);
                                         noRecentFilesLbl.setForeground(Color.WHITE);
-                                        recentFilesPanel.setBackground(Consts.MENU_COLOR);
+                                        recentFilesPanel.setBackground(Consts.MenuBar.WINDOW_BG_COLOR);
 
                                         recentLayout.putConstraint(SpringLayout.NORTH,
                                                         noRecentFilesLbl,
@@ -274,7 +274,7 @@ public class ContentService {
                                                         recentFilesPanel);
                                         recentLayout.putConstraint(SpringLayout.SOUTH,
                                                         noRecentFilesLbl,
-                                                        Consts.RECENT_FILE_ROW_HEIGHT,
+                                                        Consts.Dialogue.Window.RECENT_FILE_ROW_HEIGHT,
                                                         SpringLayout.NORTH,
                                                         noRecentFilesLbl);
                                         recentLayout.putConstraint(SpringLayout.WEST,
@@ -290,7 +290,7 @@ public class ContentService {
                                         recentFilesPanel.add(noRecentFilesLbl);
                                 } else {
                                         // Display buttons to load the files if any are available in the save directory
-                                        for (int i = 0; i < Consts.NUMBER_OF_READ_FILES; i++) {
+                                        for (int i = 0; i < Consts.Dialogue.Window.NUMBER_OF_READ_FILES; i++) {
                                                 File recentFile = recentFiles[i];
                                                 JButton recentFileButton = new JButton(recentFile.getName());
                                                 recentFileButton.setToolTipText(
@@ -305,7 +305,7 @@ public class ContentService {
                                                 });
                                                 recentFileButton.setHorizontalAlignment(SwingConstants.LEFT);
                                                 recentFileButton.setForeground(Color.WHITE);
-                                                recentFileButton.setBackground(Consts.MENU_COLOR);
+                                                recentFileButton.setBackground(Consts.MenuBar.WINDOW_BG_COLOR);
                                                 // Make the background transparent for the button
                                                 recentFileButton.setBorderPainted(false);
                                                 recentFileButton.setBorder(null);
@@ -314,12 +314,12 @@ public class ContentService {
                                                 recentFileButton.addMouseListener(new java.awt.event.MouseAdapter() {
                                                         public void mouseEntered(MouseEvent evt) {
                                                                 ((JButton) evt.getSource())
-                                                                                .setBackground(Consts.MENU_BTN_COLOR_HOVER);
+                                                                                .setBackground(Consts.MenuBar.BTN_COLOR_HOVER);
                                                         }
 
                                                         public void mouseExited(MouseEvent evt) {
                                                                 ((JButton) evt.getSource())
-                                                                                .setBackground(Consts.MENU_COLOR);
+                                                                                .setBackground(Consts.MenuBar.WINDOW_BG_COLOR);
                                                         }
                                                 });
 
@@ -330,7 +330,7 @@ public class ContentService {
                                                                 recentFilesPanel);
                                                 recentLayout.putConstraint(SpringLayout.SOUTH,
                                                                 recentFileButton,
-                                                                Consts.RECENT_FILE_ROW_HEIGHT,
+                                                                Consts.Dialogue.Window.RECENT_FILE_ROW_HEIGHT,
                                                                 SpringLayout.NORTH,
                                                                 recentFileButton);
                                                 recentLayout.putConstraint(SpringLayout.WEST,
@@ -345,7 +345,7 @@ public class ContentService {
                                                                 recentFilesPanel);
                                                 recentFilesPanel.add(recentFileButton);
 
-                                                rowPadding += Consts.RECENT_FILE_ROW_HEIGHT;
+                                                rowPadding += Consts.Dialogue.Window.RECENT_FILE_ROW_HEIGHT;
                                         }
                                 }
 
@@ -366,7 +366,7 @@ public class ContentService {
                                                 recentTitle);
                                 layout.putConstraint(SpringLayout.SOUTH,
                                                 recentFilesPanel,
-                                                Consts.RECENT_FILE_Y,
+                                                Consts.Dialogue.Window.RECENT_FILE_Y,
                                                 SpringLayout.NORTH,
                                                 recentFilesPanel);
                                 // #endregion
@@ -382,6 +382,7 @@ public class ContentService {
                                                                 for (Component obj : cardPanel.getComponents()) {
                                                                         if (obj.getName() != null)
                                                                                 if (obj.getName() == "graphCb_REMOVABLE") {
+                                                                                        @SuppressWarnings("unchecked")
                                                                                         String type = ((JComboBox<String>) (obj))
                                                                                                         .getSelectedItem()
                                                                                                         .toString();
@@ -416,7 +417,7 @@ public class ContentService {
                                                                                                                         .getValue()
                                                                                                                         .toString()) < 2) {
                                                                                                 ((JFormattedTextField) (obj))
-                                                                                                                .setBackground(Consts.DIALOGUE_GRIDSIZE_WRONG_COLOR);
+                                                                                                                .setBackground(Consts.Dialogue.Window.GRIDSIZE_WRONG_COLOR);
                                                                                         } else {
                                                                                                 ((JFormattedTextField) (obj))
                                                                                                                 .setBackground(Color.WHITE);
@@ -440,7 +441,7 @@ public class ContentService {
                                                                                                                         .getValue()
                                                                                                                         .toString()) < 2) {
                                                                                                 ((JFormattedTextField) (obj))
-                                                                                                                .setBackground(Consts.DIALOGUE_GRIDSIZE_WRONG_COLOR);
+                                                                                                                .setBackground(Consts.Dialogue.Window.GRIDSIZE_WRONG_COLOR);
                                                                                         } else {
                                                                                                 ((JFormattedTextField) (obj))
                                                                                                                 .setBackground(Color.WHITE);
@@ -474,12 +475,12 @@ public class ContentService {
 
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 newButton,
-                                                Consts.DIALOGUE_BUTTON_MARGIN_TOP,
+                                                Consts.Dialogue.Window.BUTTON_MARGIN_TOP,
                                                 SpringLayout.SOUTH,
                                                 recentFilesPanel);
                                 layout.putConstraint(SpringLayout.WEST,
                                                 newButton,
-                                                Consts.DIALOGUE_BUTTON_MARGIN_H,
+                                                Consts.Dialogue.Window.BUTTON_MARGIN_H,
                                                 SpringLayout.WEST,
                                                 contentPanel);
                                 // #endregion
@@ -489,12 +490,12 @@ public class ContentService {
                                 contentPanel.add(openButton);
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 openButton,
-                                                Consts.DIALOGUE_BUTTON_MARGIN_TOP,
+                                                Consts.Dialogue.Window.BUTTON_MARGIN_TOP,
                                                 SpringLayout.SOUTH,
                                                 recentFilesPanel);
                                 layout.putConstraint(SpringLayout.EAST,
                                                 openButton,
-                                                -Consts.DIALOGUE_BUTTON_MARGIN_H,
+                                                -Consts.Dialogue.Window.BUTTON_MARGIN_H,
                                                 SpringLayout.EAST,
                                                 contentPanel);
                                 // #endregion
@@ -565,7 +566,7 @@ public class ContentService {
 
                                                                         cardLayout.putConstraint(SpringLayout.NORTH,
                                                                                         rowInput,
-                                                                                        Consts.DIALOGUE_PADDING_V,
+                                                                                        Consts.Dialogue.Window.PADDING_V,
                                                                                         SpringLayout.SOUTH,
                                                                                         graphGridTitle);
                                                                         cardLayout.putConstraint(SpringLayout.WEST,
@@ -575,7 +576,7 @@ public class ContentService {
                                                                                         graphGridTitle);
                                                                         cardLayout.putConstraint(SpringLayout.EAST,
                                                                                         rowInput,
-                                                                                        Consts.DIALOGUE_GRIDSIZE_INPUT_WIDTH,
+                                                                                        Consts.Dialogue.Window.GRIDSIZE_INPUT_WIDTH,
                                                                                         SpringLayout.WEST,
                                                                                         rowInput);
                                                                         // #endregion
@@ -590,7 +591,7 @@ public class ContentService {
 
                                                                         cardLayout.putConstraint(SpringLayout.NORTH,
                                                                                         colInput,
-                                                                                        Consts.DIALOGUE_PADDING_V,
+                                                                                        Consts.Dialogue.Window.PADDING_V,
                                                                                         SpringLayout.SOUTH,
                                                                                         graphGridTitle);
                                                                         cardLayout.putConstraint(SpringLayout.EAST,
@@ -600,7 +601,7 @@ public class ContentService {
                                                                                         graphGridTitle);
                                                                         cardLayout.putConstraint(SpringLayout.WEST,
                                                                                         colInput,
-                                                                                        -Consts.DIALOGUE_GRIDSIZE_INPUT_WIDTH,
+                                                                                        -Consts.Dialogue.Window.GRIDSIZE_INPUT_WIDTH,
                                                                                         SpringLayout.EAST,
                                                                                         colInput);
                                                                         // #endregion
@@ -634,17 +635,18 @@ public class ContentService {
                                                                 0,
                                                                 width - 1,
                                                                 height - 1,
-                                                                Consts.TOOLBOX_CORNER_RADIUS,
-                                                                Consts.TOOLBOX_CORNER_RADIUS);
+                                                                Consts.Main.Window.ToolBox.CORNER_RADIUS,
+                                                                Consts.Main.Window.ToolBox.CORNER_RADIUS);
                                         }
                                 };
                                 toolboxPanel.setOpaque(false);
-                                toolboxPanel.setBackground(Consts.TOOLBOX_COLOR);
+                                toolboxPanel.setBackground(Consts.Main.Window.ToolBox.COLOR);
                                 contentPanel.add(toolboxPanel);
 
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 toolboxPanel,
-                                                -(Consts.TOOLBOX_HEIGHT + Consts.TOOLBOX_LABEL_HEIGHT),
+                                                -(Consts.Main.Window.ToolBox.HEIGHT
+                                                                + Consts.Main.Window.ToolBox.LABEL_HEIGHT),
                                                 SpringLayout.SOUTH,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.SOUTH,
@@ -653,7 +655,8 @@ public class ContentService {
                                                 SpringLayout.SOUTH,
                                                 contentPanel);
                                 Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                                int toolboxMargin = ((int) screenSize.getWidth() - Consts.TOOLBOX_WIDTH) / 2;
+                                int toolboxMargin = ((int) screenSize.getWidth() - Consts.Main.Window.ToolBox.WIDTH)
+                                                / 2;
                                 layout.putConstraint(SpringLayout.EAST,
                                                 toolboxPanel,
                                                 -toolboxMargin,
@@ -671,36 +674,37 @@ public class ContentService {
 
                                 layout.putConstraint(SpringLayout.WEST,
                                                 canvas,
-                                                Consts.CANVAS_PADDING,
+                                                Consts.Main.Window.Canvas.PADDING,
                                                 SpringLayout.WEST,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.EAST,
                                                 canvas,
-                                                -Consts.CANVAS_PADDING,
+                                                -Consts.Main.Window.Canvas.PADDING,
                                                 SpringLayout.EAST,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 canvas,
-                                                Consts.CANVAS_PADDING,
+                                                Consts.Main.Window.Canvas.PADDING,
                                                 SpringLayout.NORTH,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.SOUTH,
                                                 canvas,
-                                                -Consts.CANVAS_PADDING,
+                                                -Consts.Main.Window.Canvas.PADDING,
                                                 SpringLayout.SOUTH,
                                                 contentPanel);
 
-                                canvas.setBackground(Consts.BG_COLOR);
-                                contentPanel.setBackground(Consts.MENU_COLOR);
+                                canvas.setBackground(Consts.MenuBar.MENU_BG_COLOR);
+                                contentPanel.setBackground(Consts.MenuBar.WINDOW_BG_COLOR);
                                 contentPanel.add(canvas);
                                 // #endregion
 
                                 // #region Toolbox - Buttons
 
                                 int buttonCount = 3;
-                                int remainingSpace = Consts.TOOLBOX_WIDTH - buttonCount * Consts.TOOLBOX_HEIGHT;
+                                int remainingSpace = Consts.Main.Window.ToolBox.WIDTH
+                                                - buttonCount * Consts.Main.Window.ToolBox.HEIGHT;
                                 int buttonSpacingAround = remainingSpace / (buttonCount * 2);
-                                int labelSize = Consts.TOOLBOX_WIDTH / buttonCount;
+                                int labelSize = Consts.Main.Window.ToolBox.WIDTH / buttonCount;
 
                                 // #region Buttons Add
                                 JButton addBtn = CreateToolboxButton("Original", canvas);
@@ -711,13 +715,13 @@ public class ContentService {
                                                 toolboxPanel);
                                 toolboxLayout.putConstraint(SpringLayout.NORTH,
                                                 addBtn,
-                                                Consts.TOOLBOX_LABEL_HEIGHT - 1,
+                                                Consts.Main.Window.ToolBox.LABEL_HEIGHT - 1,
                                                 SpringLayout.NORTH,
                                                 toolboxPanel);
                                 toolboxPanel.add(addBtn);
 
                                 JLabel addLbl = new JLabel("Select nodes", SwingConstants.CENTER);
-                                addLbl.setForeground(Consts.TOOLBOX_TEXT_COLOR);
+                                addLbl.setForeground(Consts.Main.Window.ToolBox.TEXT_COLOR);
                                 toolboxLayout.putConstraint(SpringLayout.WEST,
                                                 addLbl,
                                                 0,
@@ -750,7 +754,7 @@ public class ContentService {
                                                 addBtn);
                                 toolboxLayout.putConstraint(SpringLayout.NORTH,
                                                 removeButton,
-                                                Consts.TOOLBOX_LABEL_HEIGHT - 1,
+                                                Consts.Main.Window.ToolBox.LABEL_HEIGHT - 1,
                                                 SpringLayout.NORTH,
                                                 toolboxPanel);
                                 toolboxPanel.add(removeButton);
@@ -788,7 +792,7 @@ public class ContentService {
                                                 removeButton);
                                 toolboxLayout.putConstraint(SpringLayout.NORTH,
                                                 selectButton,
-                                                Consts.TOOLBOX_LABEL_HEIGHT - 1,
+                                                Consts.Main.Window.ToolBox.LABEL_HEIGHT - 1,
                                                 SpringLayout.NORTH,
                                                 toolboxPanel);
                                 toolboxPanel.add(selectButton);
@@ -823,7 +827,7 @@ public class ContentService {
                                 JPanel fullContent = new JPanel(windowLayout);
                                 SpringLayout logLayout = new SpringLayout();
                                 JPanel logPanel = new JPanel(logLayout);
-                                logPanel.setBackground(Consts.BG_COLOR);
+                                logPanel.setBackground(Consts.MenuBar.MENU_BG_COLOR);
 
                                 JLabel logLbl = new JLabel();
 
@@ -875,7 +879,7 @@ public class ContentService {
                                                 fullContent);
                                 windowLayout.putConstraint(SpringLayout.NORTH,
                                                 logPanel,
-                                                -Consts.LOGGER_HEIGHT,
+                                                -Consts.Logger.HEIGHT,
                                                 SpringLayout.SOUTH,
                                                 fullContent);
 
@@ -907,23 +911,25 @@ public class ContentService {
         }
 
         private static JButton CreateToolboxButton(final String iconName, final JPanel canvas) {
-                ImageIcon icon = new ImageIcon(Consts.CUSTOM_CURSOR_PATH + "_" + iconName + ".png");
+                ImageIcon icon = new ImageIcon(Consts.Main.Window.Canvas.CUSTOM_CURSOR_PATH + "_" + iconName + ".png");
                 Image scaledIcon = icon.getImage()
-                                .getScaledInstance(Consts.TOOLBOX_HEIGHT, Consts.TOOLBOX_HEIGHT, Image.SCALE_SMOOTH);
+                                .getScaledInstance(Consts.Main.Window.ToolBox.HEIGHT, Consts.Main.Window.ToolBox.HEIGHT,
+                                                Image.SCALE_SMOOTH);
                 JButton button = new JButton(new ImageIcon(scaledIcon));
                 button.setBackground(null);
                 // Make the background transparent for the button
                 button.setBorderPainted(false);
                 button.setBorder(null);
                 // Resize button
-                button.setSize(Consts.TOOLBOX_HEIGHT, Consts.TOOLBOX_HEIGHT);
+                button.setSize(Consts.Main.Window.ToolBox.HEIGHT, Consts.Main.Window.ToolBox.HEIGHT);
                 button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
                 button.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                                 Image cursorIcon = toolkit
-                                                .getImage(Consts.CUSTOM_CURSOR_PATH + "_" + iconName + ".png");
+                                                .getImage(Consts.Main.Window.Canvas.CUSTOM_CURSOR_PATH + "_" + iconName
+                                                                + ".png");
                                 Cursor customCursor = toolkit.createCustomCursor(cursorIcon, new Point(0, 0), iconName);
                                 canvas.setCursor(customCursor);
                         }
@@ -938,7 +944,7 @@ public class ContentService {
 
                 JPanel canvas = new JPanel();
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
-                Image cursorIcon = toolkit.getImage(Consts.CUSTOM_CURSOR_PATH + "_Original.png");
+                Image cursorIcon = toolkit.getImage(Consts.Main.Window.Canvas.CUSTOM_CURSOR_PATH + "_Original.png");
                 Cursor customCursor = toolkit.createCustomCursor(cursorIcon, new Point(0, 0), "Original");
                 canvas.setCursor(customCursor);
                 Object canvasService = null;

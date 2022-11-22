@@ -36,7 +36,7 @@ public class Graph {
         }
 
         public Point[] GetSquareBoundaries() {
-            int enforcedRadius = Consts.NODE_RADIUS + Consts.NODE_MARGIN_RADIUS;
+            int enforcedRadius = Consts.Main.Window.Canvas.Node.RADIUS + Consts.Main.Window.Canvas.Node.MARGIN_RADIUS;
             Point upLeft = new Point((int) this.x - enforcedRadius, (int) this.y + enforcedRadius),
                     downRight = new Point((int) this.x + enforcedRadius, (int) this.y - enforcedRadius);
             return new Point[] { upLeft, downRight };
