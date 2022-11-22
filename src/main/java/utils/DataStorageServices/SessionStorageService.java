@@ -10,7 +10,7 @@ import utils.Consts;
 
 public class SessionStorageService {
     public static void DeleteSessionStorage() {
-        File sessionStorage = new File(Consts.SESSION_STORAGE_PATH);
+        File sessionStorage = new File(Consts.Storage.SESSION_STORAGE_PATH);
         if (sessionStorage.delete()) {
             System.out.println("SYSTEM: Successfully deleted the active session storage.");
         } else {
@@ -19,7 +19,7 @@ public class SessionStorageService {
     }
 
     public static void WriteSessionStorage(String data) {
-        File sessionStorage = new File(Consts.SESSION_STORAGE_PATH);
+        File sessionStorage = new File(Consts.Storage.SESSION_STORAGE_PATH);
         if (sessionStorage.exists()) {
             try {
                 FileWriter fw = new FileWriter(sessionStorage);
@@ -47,7 +47,7 @@ public class SessionStorageService {
     }
 
     public static String ReadSessionStorage() {
-        File sessionStorage = new File(Consts.SESSION_STORAGE_PATH);
+        File sessionStorage = new File(Consts.Storage.SESSION_STORAGE_PATH);
         String data = null;
         if (sessionStorage.exists()) {
             BufferedReader br;
@@ -61,7 +61,7 @@ public class SessionStorageService {
             }
         } else {
             System.err.println(
-                    "ERROR: There is no session storage file saved at \"" + Consts.SESSION_STORAGE_PATH + "\".");
+                    "ERROR: There is no session storage file saved at \"" + Consts.Storage.SESSION_STORAGE_PATH + "\".");
         }
         return data;
     }

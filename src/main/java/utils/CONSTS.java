@@ -5,88 +5,110 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-public class Consts {
-    // #region Entry Dialogue design
-    public static final Color MENU_BTN_COLOR_HOVER = new Color(75, 75, 75);
-    public static final Color MENU_COLOR = new Color(45, 45, 45);
-    public static final Color BG_COLOR = new Color(30, 30, 30);
-    public static final int MENU_BTN_SIZE = 25;
-    public static final int MENU_BTN_MARGIN = 10;
-    public static final float MENU_BTN_PADDING = 2.5f;
-    public static final int MENU_BTN_IMG_SIZE = 20;
+public final class Consts {
 
-    public static final int DIALOGUE_PADDING_H = 50;
-    public static final int DIALOGUE_PADDING_V = 5;
-    public static final int DIALOGUE_PADDING_CATEGORY_V = 25;
+    public static class MenuBar {
+        public static final Color BTN_COLOR_HOVER = new Color(75, 75, 75);
+        public static final Color WINDOW_BG_COLOR = new Color(45, 45, 45);
+        public static final Color MENU_BG_COLOR = new Color(30, 30, 30);
+        public static final int BTN_SIZE = 25;
+        public static final int BTN_MARGIN = 10;
+        public static final int BTN_IMG_SIZE = 20;
+        public static final float BTN_PADDING = 2.5f;
+    }
 
-    public static final int RECENT_FILE_Y = 160;
-    public static final int RECENT_FILE_ROW_HEIGHT = 20;
-    public static final int NUMBER_OF_READ_FILES = 8;
+    public static class Dialogue {
+        public static class Window {
+            public static final int PADDING_H = 50;
+            public static final int PADDING_V = 5;
+            public static final int PADDING_CATEGORY_V = 25;
 
-    public static final int DIALOGUE_BUTTON_MARGIN_TOP = 20;
-    public static final int DIALOGUE_BUTTON_MARGIN_H = 55;
+            public static final int RECENT_FILE_Y = 160;
+            public static final int RECENT_FILE_ROW_HEIGHT = 20;
+            public static final int NUMBER_OF_READ_FILES = 8;
 
-    public static final int DIALOGUE_GRIDSIZE_INPUT_WIDTH = 95;
-    public static final Color DIALOGUE_GRIDSIZE_WRONG_COLOR = new Color(255, 150, 120);
-    // #endregion
+            public static final int BUTTON_MARGIN_TOP = 20;
+            public static final int BUTTON_MARGIN_H = 55;
 
-    // #region Entry Dialogue data
-    public static final String[] ALGORTIHMS_GRAPH = { "A*" };
-    public static final String[] ALGORIHMS_GRID = { "TESTING1", "TESTING2" };
+            public static final int GRIDSIZE_INPUT_WIDTH = 95;
+            public static final Color GRIDSIZE_WRONG_COLOR = new Color(255, 150, 120);
+        }
 
-    public static final String DIALOGUE_TITLE = "Pathfinder - Entry";
-    public static final int DIALOGUE_CLOSING = JFrame.EXIT_ON_CLOSE;
-    public static final boolean DIALOGUE_FULLSCREEN = false;
-    public static final Dimension DIALOGUE_WINDOW_SIZE = new Dimension(300, 500);
-    // #endregion
+        public static class Data {
+            public static final String[] ALGORTIHMS_GRAPH = { "A*" };
+            public static final String[] ALGORIHMS_GRID = { "TESTING1", "TESTING2" };
 
-    // #region Main - Toolbox design
-    public static final int TOOLBOX_HEIGHT = 50;
-    public static final int TOOLBOX_WIDTH = 550;
-    public static final int TOOLBOX_CORNER_RADIUS = 25;
-    public static final Color TOOLBOX_COLOR = Color.WHITE;
-    public static final Color TOOLBOX_TEXT_COLOR = Color.BLACK;
-    public static final int TOOLBOX_LABEL_HEIGHT = 15;
+            public static final String TITLE = "Pathfinder - Entry";
+            public static final int CLOSING = JFrame.EXIT_ON_CLOSE;
+            public static final boolean FULLSCREEN = false;
+            public static final Dimension WINDOW_SIZE = new Dimension(300, 500);
+            public static ButtonState[] BUTTONS_STATE = new ButtonState[] {
+                    ButtonState.ENABLED,
+                    ButtonState.DISABLED,
+                    ButtonState.ENABLED
+            };
+        }
+    }
 
-    public static final int CANVAS_PADDING = 10;
-    // #endregion
+    public static class Main {
 
-    // #region Main - Canvas design
-    public static final String CUSTOM_CURSOR_PATH = "./data/img/cursor/images/Cursor";
+        public static class Window {
+            public static class ToolBox {
+                public static final int HEIGHT = 50;
+                public static final int WIDTH = 550;
+                public static final int CORNER_RADIUS = 25;
+                public static final Color COLOR = Color.WHITE;
+                public static final Color TEXT_COLOR = Color.BLACK;
+                public static final int LABEL_HEIGHT = 15;
+            }
 
-    public static final int NODE_RADIUS = 50;
-    public static final int NODE_MARGIN_RADIUS = 5;
-    public static final int NODE_ERASE_RADIUS = 4;
+            public static class Canvas {
+                public static final int PADDING = 10;
+                public static final String CUSTOM_CURSOR_PATH = "./data/img/cursor/images/Cursor";
 
-    public static final Color NODE_DEFAULT_COLOR = Color.WHITE;
-    public static final Color NODE_ACTIVE_BORDER_COLOR = new Color(75, 135, 0);
+                public static class Node {
+                    public static final int RADIUS = 50;
+                    public static final int MARGIN_RADIUS = 5;
+                    public static final int ERASE_RADIUS = 4;
 
-    // Has to be float to account as Size | if int it accounts as Style
-    public static final float NODE_TEXT_FONT_SIZE = 2F;
-    public static final Color NODE_NEW_TEXT_COLOR = Color.BLACK;
-    public static final Color NODE_ACTIVE_TEXT_COLOR = Color.BLACK;
-    public static final Color NODE_START_TEXT_COLOR = Color.BLACK;
-    public static final Color NODE_END_TEXT_COLOR = Color.BLACK;
-    // #endregion
+                    public static final Color DEFAULT_COLOR = Color.WHITE;
+                    public static final Color ACTIVE_BORDER_COLOR = new Color(75, 135, 0);
 
-    // #region Main data
-    public static final String MAIN_TITLE = "Pathfinder - Application";
-    public static final int MAIN_CLOSING = JFrame.EXIT_ON_CLOSE;
-    public static final boolean MAIN_FULLSCREEN = true;
-    // #endregion
+                    // Has to be float to account as Size | if int it accounts as Style
+                    public static final float TEXT_FONT_SIZE = 2F;
+                    public static final Color NEW_TEXT_COLOR = Color.BLACK;
+                    public static final Color ACTIVE_TEXT_COLOR = Color.BLACK;
+                    public static final Color START_TEXT_COLOR = Color.BLACK;
+                    public static final Color END_TEXT_COLOR = Color.BLACK;
 
-    // #region Logger
-    public static final int LOGGER_HEIGHT = 25;
-    // #endregion
+                }
+            }
+        }
 
-    // #region Local Storage
+        public static class Data {
+            public static final String TITLE = "Pathfinder - Application";
+            public static final int CLOSING = JFrame.EXIT_ON_CLOSE;
+            public static final boolean FULLSCREEN = true;
+            public static ButtonState[] BUTTONS_STATE = new ButtonState[] {
+                    ButtonState.ENABLED,
+                    ButtonState.ENABLED,
+                    ButtonState.ENABLED
+            };
+        }
 
-    // Local
-    public static final String LOCAL_STORAGE_DIRECTORY_PATH = System.getenv("APPDATA") + "\\PathfinderApp\\saves";
+    }
 
-    // Active
-    public static final String SESSION_STORAGE_PATH = ".\\data\\settings\\sessionStorage.txt";
+    public static class Logger {
+        public static final int HEIGHT = 25;
+    }
 
-    // #endregion
+    public static class Storage {
+        public static final String LOCAL_STORAGE_PATH = System.getenv("APPDATA") + "\\PathfinderApp\\saves";
+        public static final String SESSION_STORAGE_PATH = ".\\data\\settings\\sessionStorage.txt";
+    }
 
+    public enum ButtonState {
+        ENABLED,
+        DISABLED
+    }
 }
