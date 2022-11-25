@@ -41,7 +41,7 @@ public class ContentService {
                 SpringLayout layout = new SpringLayout();
                 final JPanel contentPanel = new JPanel(layout);
                 switch (windowName) {
-                        case "dialogueSettings":
+                        case Consts.Dialogue.NAME:
                                 contentPanel.setBackground(Consts.MenuBar.MENU_BG_COLOR);
                                 // #region App Title
                                 JLabel title = new JLabel("Application start-up settings", JLabel.CENTER);
@@ -72,12 +72,12 @@ public class ContentService {
                                                 title);
                                 layout.putConstraint(SpringLayout.EAST,
                                                 canvasTitle,
-                                                -Consts.Dialogue.Window.PADDING_H,
+                                                -Consts.Dialogue.Window.PADDING_HORIZONTAL,
                                                 SpringLayout.EAST,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.WEST,
                                                 canvasTitle,
-                                                Consts.Dialogue.Window.PADDING_H,
+                                                Consts.Dialogue.Window.PADDING_HORIZONTAL,
                                                 SpringLayout.WEST,
                                                 contentPanel);
                                 // #endregion
@@ -91,7 +91,7 @@ public class ContentService {
 
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 canvasCb,
-                                                Consts.Dialogue.Window.PADDING_V,
+                                                Consts.Dialogue.Window.PADDING_VERTICAL,
                                                 SpringLayout.SOUTH,
                                                 canvasTitle);
                                 layout.putConstraint(SpringLayout.EAST,
@@ -188,17 +188,17 @@ public class ContentService {
 
                                 cardLayout.putConstraint(SpringLayout.NORTH,
                                                 graphGridTitle,
-                                                Consts.Dialogue.Window.PADDING_V,
+                                                Consts.Dialogue.Window.PADDING_VERTICAL,
                                                 SpringLayout.NORTH,
                                                 cardPanel);
                                 cardLayout.putConstraint(SpringLayout.EAST,
                                                 graphGridTitle,
-                                                -Consts.Dialogue.Window.PADDING_H,
+                                                -Consts.Dialogue.Window.PADDING_HORIZONTAL,
                                                 SpringLayout.EAST,
                                                 cardPanel);
                                 cardLayout.putConstraint(SpringLayout.WEST,
                                                 graphGridTitle,
-                                                Consts.Dialogue.Window.PADDING_H,
+                                                Consts.Dialogue.Window.PADDING_HORIZONTAL,
                                                 SpringLayout.WEST,
                                                 cardPanel);
                                 // #endregion
@@ -237,17 +237,17 @@ public class ContentService {
 
                                 layout.putConstraint(SpringLayout.NORTH,
                                                 recentTitle,
-                                                Consts.Dialogue.Window.PADDING_V,
+                                                Consts.Dialogue.Window.PADDING_VERTICAL,
                                                 SpringLayout.SOUTH,
                                                 cardPanel);
                                 layout.putConstraint(SpringLayout.EAST,
                                                 recentTitle,
-                                                -Consts.Dialogue.Window.PADDING_H,
+                                                -Consts.Dialogue.Window.PADDING_HORIZONTAL,
                                                 SpringLayout.EAST,
                                                 contentPanel);
                                 layout.putConstraint(SpringLayout.WEST,
                                                 recentTitle,
-                                                Consts.Dialogue.Window.PADDING_H,
+                                                Consts.Dialogue.Window.PADDING_HORIZONTAL,
                                                 SpringLayout.WEST,
                                                 contentPanel);
                                 // #endregion
@@ -566,7 +566,7 @@ public class ContentService {
 
                                                                         cardLayout.putConstraint(SpringLayout.NORTH,
                                                                                         rowInput,
-                                                                                        Consts.Dialogue.Window.PADDING_V,
+                                                                                        Consts.Dialogue.Window.PADDING_VERTICAL,
                                                                                         SpringLayout.SOUTH,
                                                                                         graphGridTitle);
                                                                         cardLayout.putConstraint(SpringLayout.WEST,
@@ -591,7 +591,7 @@ public class ContentService {
 
                                                                         cardLayout.putConstraint(SpringLayout.NORTH,
                                                                                         colInput,
-                                                                                        Consts.Dialogue.Window.PADDING_V,
+                                                                                        Consts.Dialogue.Window.PADDING_VERTICAL,
                                                                                         SpringLayout.SOUTH,
                                                                                         graphGridTitle);
                                                                         cardLayout.putConstraint(SpringLayout.EAST,
@@ -617,7 +617,7 @@ public class ContentService {
                                         }
                                 });
                                 return contentPanel;
-                        case "mainWindow":
+                        case Consts.Main.NAME:
                                 SpringLayout toolboxLayout = new SpringLayout();
                                 JPanel toolboxPanel = new JPanel(toolboxLayout) {
                                         @Override
@@ -904,6 +904,11 @@ public class ContentService {
                                                 SpringLayout.NORTH,
                                                 logPanel);
                                 return fullContent;
+
+                        case Consts.Details.NAME:
+                                // create custom label 
+                                contentPanel.setBackground(Consts.Details.Window.WINDOW_BG_COLOR);
+                                return contentPanel;
                         default:
                                 System.out.println("\"" + windowName + "\" is not a specified value in ContentService");
                                 return null;

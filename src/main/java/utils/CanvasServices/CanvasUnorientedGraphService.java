@@ -86,6 +86,7 @@ public class CanvasUnorientedGraphService {
                 node.displayName,
                 Consts.Main.Window.Canvas.Node.ACTIVE_BORDER_COLOR,
                 Consts.Main.Window.Canvas.Node.RADIUS + Consts.Main.Window.Canvas.Node.MARGIN_RADIUS / 2);
+
     }
 
     private void CreateNode(MouseEvent e) {

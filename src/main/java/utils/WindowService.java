@@ -16,11 +16,12 @@ public class WindowService {
     public static JFrame activeMainWindow;
 
     public static void OpenEntryDialogue() {
-        CreateWindow("dialogueSettings");
+        SessionStorageService.DeleteSessionStorage();
+        CreateWindow(Consts.Dialogue.NAME);
     }
 
     public static void OpenMainWindow() {
-        CreateWindow("mainWindow");
+        CreateWindow(Consts.Main.NAME);
     }
 
     public static void CreateWindow(String windowName) {
