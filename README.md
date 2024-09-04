@@ -3,7 +3,7 @@
 #### -JAVA
 
 **Notes**
-- This project is a new improved version of a scratched passion project, ultimately developed for a university project.
+- This project is a new improved version of a scratched passion project from 2020, ultimately redeveloped for a university project in 2024.
 
 **Description**
 
