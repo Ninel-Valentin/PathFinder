@@ -1,0 +1,5 @@
+{
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.settings.url": ".vscode/settings.prefs",
+    "java.format.settings.url": ".vscode/formatter-settings.xml"
+}

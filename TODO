@@ -1,0 +1,18 @@
+interface for drawing functions
+
+Find limit on graph size
+
+Check if the graph setting is digraph to add the weight in the editor / to remove it if not
+Add next node value label near graph screen
+
+On animation of graphs read this : https://stackoverflow.com/questions/62074141/draw-shapes-with-delay
+
+
+Show animations of all algorithms/explain how they work and show the time taken to compute them
+Name of algorithm selector, input, output, description
+
+Features 💅
+
+Logging system
+- pending confirmation
+- pending confirmation cancelment
